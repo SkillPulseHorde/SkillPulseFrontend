@@ -4,12 +4,12 @@ import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'auth-layout',
-  templateUrl: 'auth-layout.html',
+  templateUrl: 'auth-layout.component.html',
   imports: [
     RouterOutlet,
     NgOptimizedImage
   ],
-  styleUrl: 'auth-layout.css'
+  styleUrl: 'auth-layout.component.css'
 })
 
 export class AuthLayout { }
