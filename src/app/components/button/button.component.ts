@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -7,5 +7,12 @@ import {Component, input} from '@angular/core';
 })
 
 export class Button {
+  type = input("button")
   label = input("")
+  width = input("min-content")
+  buttonClick = output<void>();
+
+  protected onClick = (): void => {
+    this.buttonClick.emit()
+  }
 }

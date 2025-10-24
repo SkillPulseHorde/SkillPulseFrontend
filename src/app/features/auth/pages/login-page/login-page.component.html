@@ -2,11 +2,11 @@
   <h3 class="title">Вход</h3>
   <div class="formItem">
     <label for="email">Почта:</label>
-    <input id="email" type="email" />
+    <app-input id="email" type="email" [control]="email" />
   </div>
   <div class="formItem">
     <label for="password">Пароль:</label>
-    <input id="password" type="password" />
+    <app-input id="password" type="password" [control]="password" />
   </div>
-  <app-button class="submitButton" label="Вход" />
+  <app-button class="submitButton" label="Вход" width="100%" (buttonClick)="onSubmit()" />
 </div>
