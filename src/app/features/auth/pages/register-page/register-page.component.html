@@ -1,0 +1,16 @@
+<div class="page">
+  <h3 class="title">Регистрация</h3>
+  <div class="formItem">
+    <label for="email">Почта:</label>
+    <app-input id="email" type="email" [control]="email" />
+  </div>
+  <div class="formItem">
+    <label for="password">Пароль:</label>
+    <app-input id="password" type="password" [control]="password" />
+  </div>
+  <div class="formItem">
+    <label for="passwordConfirm">Повторите пароль:</label>
+    <app-input id="passwordConfirm" type="password" [control]="passwordConfirm" />
+  </div>
+  <app-button class="submitButton" label="Вход" width="100%" (buttonClick)="onSubmit()" />
+</div>
