@@ -3,10 +3,18 @@
   <div class="formItem">
     <label for="email">Почта:</label>
     <app-input id="email" type="email" [control]="email" />
+    @if (email.touched && email.hasError('required')) {
+      <div class="formError">Пожалуйста, укажите почту</div>
+    } @else if (email.touched && email.hasError("email")) {
+      <div class="formError">Почта имеет неверный формат</div>
+    }
   </div>
   <div class="formItem">
     <label for="password">Пароль:</label>
     <app-input id="password" type="password" [control]="password" />
+    @if (password.touched && password.hasError('required')) {
+      <div class="formError">Пожалуйста, введите пароль</div>
+    }
   </div>
-  <app-button class="submitButton" label="Вход" width="100%" (buttonClick)="onSubmit()" />
+  <app-button class="submitButton" label="Вход" width="100%" [disabled]="((loading$ | async) || !email.valid || !password.valid) ?? false" (buttonClick)="onSubmit()" />
 </div>

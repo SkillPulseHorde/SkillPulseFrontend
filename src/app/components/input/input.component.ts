@@ -7,6 +7,7 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule
   ],
   templateUrl: './input.component.html',
+  standalone: true,
   styleUrl: './input.component.css'
 })
 export class Input{
