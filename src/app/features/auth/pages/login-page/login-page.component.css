@@ -41,3 +41,19 @@
 .submitButton {
   width: 100%;
 }
+
+.changeFormLink {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+
+  a {
+    color: #c22918;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

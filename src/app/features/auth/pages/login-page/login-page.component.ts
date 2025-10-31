@@ -8,6 +8,7 @@ import {Store} from '@ngrx/store';
 import {AuthService} from '../../api/auth.service';
 import {login, loginFailure, loginSuccess} from '../../store/auth.actions';
 import {AsyncPipe} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'login-page',
@@ -16,7 +17,8 @@ import {AsyncPipe} from '@angular/common';
     Button,
     Input,
     AsyncPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   standalone: true,
   styleUrl: 'login-page.component.css'

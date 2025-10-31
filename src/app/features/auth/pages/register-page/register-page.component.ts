@@ -8,6 +8,7 @@ import {AuthState} from '../../store/auth.reducers';
 import {AuthService} from '../../api/auth.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'register-page',
@@ -15,7 +16,8 @@ import {AsyncPipe} from '@angular/common';
   imports: [
     Button,
     Input,
-    AsyncPipe
+    AsyncPipe,
+    RouterLink
   ],
   standalone: true,
   styleUrl: 'register-page.component.css'
