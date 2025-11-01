@@ -2,15 +2,39 @@
   <h3 class="title">Регистрация</h3>
   <div class="formItem">
     <label for="email">Почта:</label>
-    <app-input id="email" type="email" [control]="email" />
+    <app-input id="email" type="email" [control]="email"/>
+    @if (email.touched && email.hasError('required')) {
+      <div class="formError">Пожалуйста, укажите почту</div>
+    } @else if (email.touched && email.hasError("email")) {
+      <div class="formError">Почта имеет неверный формат</div>
+    }
   </div>
   <div class="formItem">
     <label for="password">Пароль:</label>
-    <app-input id="password" type="password" [control]="password" />
+    <app-input id="password" type="password" [control]="password"/>
+    @if (password.touched && password.hasError('required')) {
+      <div class="formError">Пожалуйста, введите пароль</div>
+    } @else if (password.touched && password.hasError('minlength')) {
+      <div class="formError">Пароль должен состоять не менее чем из 8 символов</div>
+    } @else if (password.touched && password.hasError('pattern')) {
+      <div class="formError">Пароль должен содержать как минимум одну строчную и прописную букву, а также цифру и
+        спецсимвол
+      </div>
+    }
   </div>
   <div class="formItem">
     <label for="passwordConfirm">Повторите пароль:</label>
-    <app-input id="passwordConfirm" type="password" [control]="passwordConfirm" />
+    <app-input id="passwordConfirm" type="password" [control]="passwordConfirm"/>
+    @if (passwordConfirm.touched && passwordConfirm.hasError('passwordsunmatches')) {
+      <div class="formError">Пароли не совпадают</div>
+    }
   </div>
-  <app-button class="submitButton" label="Вход" width="100%" (buttonClick)="onSubmit()" />
+  <div class="formItem">
+    <app-button class="submitButton" label="Вход" width="100%" (buttonClick)="onSubmit()"
+                [disabled]="((loading$ | async) || !email.valid || !password.valid || !passwordConfirm.valid) ?? false"/>
+    <div class="changeFormLink">
+      Уже зарегистрированы?&nbsp;
+      <a routerLink="/auth/login">Войти</a>
+    </div>
+  </div>
 </div>

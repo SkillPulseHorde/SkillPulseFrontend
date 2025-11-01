@@ -41,3 +41,13 @@ button:hover {
 button:hover::before {
   width: 0;
 }
+
+button:disabled {
+  border-color: #BFBFBF;
+  background-color: #BFBFBF;
+  color: white;
+}
+
+button:disabled::before {
+  background-color: #BFBFBF;
+}
