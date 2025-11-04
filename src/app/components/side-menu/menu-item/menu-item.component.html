@@ -1,0 +1,9 @@
+<div class="menuItem">
+  <icon [type]="srcIcon()" [size]="iconSize()"/>
+  {{title()}}
+  @if (notification()) {
+    <div class="notification">
+      {{notification()}}
+    </div>
+  }
+</div>

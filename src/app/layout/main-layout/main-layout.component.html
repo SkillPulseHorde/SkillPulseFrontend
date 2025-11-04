@@ -1,0 +1,26 @@
+@if (!(user$ | async)?.position) {
+  <div>Loading...</div>
+} @else {
+  <div class="page">
+    <side-menu [menuItems]="menuItems()"/>
+    <div class="content">
+      <div class="header">
+        <img ngSrc="/logo-with-title.svg" alt="logo-with-title" width="290" height="48">
+        <div class="profile">
+          <div class="avatar">
+            <icon [size]="32" type="person" />
+          </div>
+          <div class="info">
+            <div class="name">{{getFullName(user$ | async)}}</div>
+            <div class="position">{{getPositionString((user$ | async)?.position)}}</div>
+          </div>
+          <div class="logout" (click)="logout()">
+            <icon [size]="20" type="logout" />
+          </div>
+        </div>
+      </div>
+      <router-outlet/>
+    </div>
+  </div>
+}
+

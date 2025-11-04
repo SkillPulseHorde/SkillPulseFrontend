@@ -1,0 +1,8 @@
+<div class="sidebarItem">
+  <icon [size]="32" [type]="srcIcon()" />
+  @if (notification()) {
+    <div class="notification">
+      {{notification()}}
+    </div>
+  }
+</div>
