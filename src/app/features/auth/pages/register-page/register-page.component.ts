@@ -25,8 +25,8 @@ import {Router, RouterLink} from '@angular/router';
 
 export class RegisterPage {
   private router = inject(Router);
+  private authService = inject(AuthService);
 
-  authService: AuthService;
   loading$: Observable<boolean>
 
   email = new FormControl("", [Validators.required, Validators.email]);
@@ -35,7 +35,6 @@ export class RegisterPage {
 
   constructor(private store: Store<{ auth: AuthState }>) {
     this.loading$ = store.select<boolean>((state) => state.auth.loading);
-    this.authService = new AuthService();
 
     this.passwordConfirm.valueChanges.subscribe(value => {
       if (value === this.password.value) {

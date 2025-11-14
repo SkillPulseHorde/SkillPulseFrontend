@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {LoginRequestProps, LoginResponse, RegisterRequestProps} from '../store/auth.model';
+import {LoginRequestProps, LoginResponse, RefreshResponse, RegisterRequestProps} from '../store/auth.model';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
@@ -15,10 +15,18 @@ export class AuthService {
   }
 
   login(props: LoginRequestProps): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.apiGatewayUrl}/api/auth/login`, props).pipe()
+    return this.http.post<LoginResponse>(`${environment.apiGatewayUrl}/api/auth/login`, props, {
+      withCredentials: true
+    }).pipe()
   }
 
-  logout(): void {
-    this.http.post(`${environment.apiGatewayUrl}/api/auth/logout`, {})
+  logout(): Observable<object> {
+    return this.http.post(`${environment.apiGatewayUrl}/api/auth/logout`, null).pipe()
+  }
+
+  refresh(): Observable<RefreshResponse> {
+    return this.http.post<RefreshResponse>(`${environment.apiGatewayUrl}/api/auth/refresh`, null, {
+      withCredentials: true
+    }).pipe()
   }
 }

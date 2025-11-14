@@ -10,6 +10,7 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {routes} from "./app.routes";
 import {userReducer} from './features/user/store/user.reducers';
 import {authInterceptor} from './features/auth/api/auth.interceptor';
+import {refreshInterceptor} from './features/auth/api/refresh.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,7 @@ import {authInterceptor} from './features/auth/api/auth.interceptor';
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withInterceptors([authInterceptor, refreshInterceptor])
     )
   ],
   bootstrap: [AppComponent],

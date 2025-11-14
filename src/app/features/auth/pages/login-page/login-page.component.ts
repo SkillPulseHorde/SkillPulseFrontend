@@ -10,8 +10,8 @@ import {login, loginFailure, loginSuccess} from '../../store/auth.actions';
 import {AsyncPipe} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {UserService} from '../../../user/api/user.service';
-import {getUser, getUserFailure, getUserSuccess} from '../../../user/store/user.actions';
-import {User} from '../../../user/store/user.model';
+import {getUser} from '../../../user/store/user.actions';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'login-page',
@@ -29,9 +29,9 @@ import {User} from '../../../user/store/user.model';
 
 export class LoginPage {
   private router = inject(Router);
+  private cookieService = inject(CookieService);
+  private authService = inject(AuthService);
 
-  authService: AuthService;
-  userService: UserService
   loading$: Observable<boolean>
 
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -39,12 +39,12 @@ export class LoginPage {
 
   constructor(private store: Store<{ auth: AuthState }>) {
     this.loading$ = store.select<boolean>((state) => state.auth.loading);
-    this.authService = new AuthService();
-    this.userService = new UserService();
   }
 
   protected onSubmit = (): void => {
     this.store.dispatch(login())
+    this.cookieService.delete('accessToken')
+    this.cookieService.delete('userId')
     this.authService.login({
       email: this.email.value!,
       password: this.password.value!
@@ -52,20 +52,15 @@ export class LoginPage {
       next: res => {
         this.store.dispatch(loginSuccess(res))
         this.store.dispatch(getUser())
-        const userId = res.userId
-        this.userService.getUserById({userId}).subscribe({
-          next: res => {
-            this.store.dispatch(getUserSuccess({
-              userId: userId,
-              ...res,
-            } as User))
-            this.router.navigate(['/app'])
-          },
-          error: err => {
-            console.error(err)
-            this.store.dispatch(getUserFailure({error: "Ошибка получения данных пользователя"}))
-          }
+        this.cookieService.set("accessToken", res.accessToken, {
+          path: "/",
+          expires: new Date(new Date().getTime() + 1000 * 3600 * 6)
         })
+        this.cookieService.set("userId", res.userId, {
+          path: "/",
+          expires: new Date(new Date().getTime() + 1000 * 3600 * 6)
+        })
+        this.router.navigate(['/app'])
       },
       error: err => {
         console.error(err)

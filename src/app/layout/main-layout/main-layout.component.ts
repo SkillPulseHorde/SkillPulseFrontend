@@ -10,6 +10,8 @@ import {Icon} from '../../components/icon/icon.component';
 import {getFullName, getMenuItemsByPosition, getPositionString} from '../../features/user/utils';
 import {MenuItemProps} from './main-layout.model';
 import {logout} from '../../features/auth/store/auth.actions';
+import {CookieService} from 'ngx-cookie-service';
+import {AuthService} from '../../features/auth/api/auth.service';
 
 @Component({
   selector: 'main-layout',
@@ -26,6 +28,8 @@ import {logout} from '../../features/auth/store/auth.actions';
 
 export class MainLayout {
   private router = inject(Router);
+  private cookieService = inject(CookieService);
+  private authService = inject(AuthService);
 
   user$: Observable<User | null>;
   menuItems = signal<MenuItemProps[]>([])
@@ -42,7 +46,13 @@ export class MainLayout {
   protected readonly getFullName = getFullName;
 
   logout(){
-    this.store.dispatch(logout())
-    this.router.navigate(['/auth/login']);
+    this.authService.logout().subscribe(
+      res => {
+        this.store.dispatch(logout())
+        this.cookieService.delete("userId")
+        this.cookieService.delete("accessToken")
+        this.router.navigate(['/auth/login']);
+      }
+    )
   }
 }

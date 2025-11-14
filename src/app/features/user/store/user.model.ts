@@ -1,7 +1,7 @@
 export type Position = "Employee" | "ProductManager" | "DepartmentManager" | "HR"
 export type Grade = "J1" | "J2" | "J3" | "M1" | "M2" | "M3" | "S"
 
-export interface User extends GetUserResponse{
+export interface User extends GetUserResponse {
   userId: string;
 }
 

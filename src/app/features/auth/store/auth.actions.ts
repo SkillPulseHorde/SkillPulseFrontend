@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {LoginResponse} from './auth.model';
+import {LoginResponse, RefreshResponse} from './auth.model';
 
 export const register = createAction(
   '[Auth] Register',
@@ -29,3 +29,8 @@ export const loginFailure = createAction(
 );
 
 export const logout = createAction('[Auth] Logout');
+
+export const refresh = createAction(
+  '[Auth] Refresh',
+  props<RefreshResponse>()
+);
