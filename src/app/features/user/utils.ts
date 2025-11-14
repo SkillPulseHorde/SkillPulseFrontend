@@ -1,9 +1,16 @@
 import {Position, User} from './store/user.model';
 import {MenuItemProps} from '../../layout/main-layout/main-layout.model';
 
-export const getFullName = (user: User | null) => {
+export const getLastNameWithInitials = (user: User | null) => {
   if (user) {
     return `${user.lastName} ${user.firstName.slice(0, 1)}.${user.midName.slice(0, 1)}.`;
+  }
+  return '';
+}
+
+export const getFullName = (user: User | null) => {
+  if (user) {
+    return `${user.lastName} ${user.firstName} ${user.midName}`;
   }
   return '';
 }

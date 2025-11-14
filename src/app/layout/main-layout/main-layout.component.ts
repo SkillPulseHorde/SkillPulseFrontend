@@ -7,7 +7,7 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../features/user/store/user.reducers';
 import {SideMenu} from '../../components/side-menu/side-menu.component';
 import {Icon} from '../../components/icon/icon.component';
-import {getFullName, getMenuItemsByPosition, getPositionString} from '../../features/user/utils';
+import {getLastNameWithInitials, getMenuItemsByPosition, getPositionString} from '../../features/user/utils';
 import {MenuItemProps} from './main-layout.model';
 import {logout} from '../../features/auth/store/auth.actions';
 import {CookieService} from 'ngx-cookie-service';
@@ -43,7 +43,7 @@ export class MainLayout {
   }
 
   protected readonly getPositionString = getPositionString;
-  protected readonly getFullName = getFullName;
+  protected readonly getLastNameWithInitials = getLastNameWithInitials;
 
   logout(){
     this.authService.logout().subscribe(

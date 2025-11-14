@@ -9,7 +9,6 @@ import {AuthService} from '../../api/auth.service';
 import {login, loginFailure, loginSuccess} from '../../store/auth.actions';
 import {AsyncPipe} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
-import {UserService} from '../../../user/api/user.service';
 import {getUser} from '../../../user/store/user.actions';
 import {CookieService} from 'ngx-cookie-service';
 

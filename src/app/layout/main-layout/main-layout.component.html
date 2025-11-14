@@ -11,7 +11,7 @@
             <icon [size]="32" type="person" />
           </div>
           <div class="info">
-            <div class="name">{{getFullName(user$ | async)}}</div>
+            <div class="name">{{getLastNameWithInitials(user$ | async)}}</div>
             <div class="position">{{getPositionString((user$ | async)?.position)}}</div>
           </div>
           <div class="logout" (click)="logout()">
