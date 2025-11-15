@@ -17,7 +17,7 @@
     }
   </div>
   <div class="formItem">
-    <app-button class="submitButton" label="Вход" width="100%" (buttonClick)="onSubmit()"
+    <app-button class="submitButton" label="Войти" width="100%" (buttonClick)="onSubmit()"
                 [disabled]="((loading$ | async) || !email.valid || !password.valid) ?? false"/>
     <div class="changeFormLink">
       Нет аккаунта?&nbsp;

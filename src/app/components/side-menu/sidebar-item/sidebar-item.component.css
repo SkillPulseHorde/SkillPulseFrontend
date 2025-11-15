@@ -1,0 +1,27 @@
+.sidebarItem {
+  position: relative;
+  border-radius: 100%;
+  padding: 4px;
+  transition: background-color 0.3s ease-in-out;
+  color: #C22918;
+}
+
+.sidebarItem:hover {
+  cursor: pointer;
+  background-color: rgba(194, 41, 24, 0.25);
+}
+
+.notification {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  background-color: #c22918;
+  border-radius: 100%;
+  color: white;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,28 @@
+@if (isOpen()) {
+  <div class="out" (click)="setIsOpened(false)"></div>
+}
+<div class="sideMenu">
+  <div class="sidebar" [class.opened]="isOpen()">
+    @if (!isOpen()) {
+      <icon class="openButton" (click)="setIsOpened(true)" [size]="40" type="burger"/>
+    } @else {
+      <icon class="openButton" (click)="setIsOpened(false)" [size]="40" type="close"/>
+    }
+    @if (!isOpen()) {
+      <div class="divider"></div>
+      <div class="sidebarItems">
+        @for (item of menuItems(); track item.id) {
+          <sidebar-item [srcIcon]="item.srcIcon" />
+        }
+      </div>
+    }
+  </div>
+  <div class="menu" [class.opened]="isOpen()">
+    <div class="menuTitle">Навигация</div>
+    <div class="menuItems">
+      @for (item of menuItems(); track item.id) {
+        <menu-item [iconSize]="20" [srcIcon]="item.srcIcon" [title]="item.title" />
+      }
+    </div>
+  </div>
+</div>

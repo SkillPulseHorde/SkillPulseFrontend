@@ -1,0 +1,29 @@
+@let user = user$ | async;
+@let loading = loading$ | async;
+
+@if (loading) {
+  <div>Loading...</div>
+} @else {
+  <div class="page">
+    <side-menu [menuItems]="getMenuItemsByPosition(user?.position)"/>
+    <div class="content">
+      <div class="header">
+        <img ngSrc="logo-with-title.svg" alt="logo-with-title" width="290" height="48">
+        <div class="profile">
+          <div class="avatar">
+            <icon [size]="32" type="person" />
+          </div>
+          <div class="info">
+            <div class="name">{{getFullName(user)}}</div>
+            <div class="position">{{getPositionString(user?.position)}}</div>
+          </div>
+          <div class="logout" (click)="logout()">
+            <icon [size]="20" type="logout" />
+          </div>
+        </div>
+      </div>
+      <router-outlet/>
+    </div>
+  </div>
+}
+
