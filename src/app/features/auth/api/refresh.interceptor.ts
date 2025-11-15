@@ -7,12 +7,26 @@ import { AuthService } from './auth.service';
 import {AuthState} from '../store/auth.reducers';
 import {logout, refresh} from '../store/auth.actions';
 import {CookieService} from 'ngx-cookie-service';
+import {getExpirationTime} from '../../utils';
 
 export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
   const store = inject(Store<{ auth: AuthState }>);
   const router = inject(Router);
   const authService = inject(AuthService);
   const cookieService = inject(CookieService);
+
+  const logoutUser = () => {
+    authService.logout().pipe(
+      take(1),
+    ).subscribe(
+      () => {
+        store.dispatch(logout());
+        cookieService.delete('accessToken');
+        cookieService.delete('userId');
+        router.navigate(['/auth/login']);
+      }
+    )
+  }
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -21,14 +35,7 @@ export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
           take(1),
           switchMap(userId => {
             if (!userId && !cookieService.get('userId')) {
-              authService.logout().subscribe(
-                res => {
-                  store.dispatch(logout());
-                  cookieService.delete('accessToken');
-                  cookieService.delete('userId');
-                  router.navigate(['/auth/login']);
-                }
-              )
+              logoutUser()
               return throwError(() => error);
             }
 
@@ -40,12 +47,14 @@ export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
                   }));
                   cookieService.set("accessToken", response.accessToken, {
                     path: "/",
-                    expires: new Date(new Date().getTime() + 1000 * 3600 * 6)
+                    expires: getExpirationTime(),
+                    sameSite: 'Strict'
                   })
                   const uid = userId ?? cookieService.get('userId');
                   cookieService.set("userId", uid , {
                     path: "/",
-                    expires: new Date(new Date().getTime() + 1000 * 3600 * 6)
+                    expires: getExpirationTime(),
+                    sameSite: 'Strict'
                   })
 
                   const clonedReq = req.clone({
@@ -56,26 +65,12 @@ export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
 
                   return next(clonedReq);
                 } else {
-                  authService.logout().subscribe(
-                    res => {
-                      store.dispatch(logout());
-                      cookieService.delete('accessToken');
-                      cookieService.delete('userId');
-                      router.navigate(['/auth/login']);
-                    }
-                  )
+                  logoutUser()
                   return throwError(() => error);
                 }
               }),
               catchError(refreshError => {
-                authService.logout().subscribe(
-                  res => {
-                    store.dispatch(logout());
-                    cookieService.delete('accessToken');
-                    cookieService.delete('userId');
-                    router.navigate(['/auth/login']);
-                  }
-                )
+                logoutUser()
                 return throwError(() => refreshError);
               })
             );

@@ -1,6 +1,5 @@
-import {Component, input, signal} from '@angular/core';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {NgOptimizedImage} from '@angular/common';
+import {Component, input} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import {Icon} from '../../icon/icon.component';
 
 @Component({

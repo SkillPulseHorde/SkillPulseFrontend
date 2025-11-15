@@ -2,12 +2,12 @@ import {Component, inject, signal} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {User} from '../../features/user/store/user.model';
-import {Observable} from 'rxjs';
+import {Observable, take} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../features/user/store/user.reducers';
 import {SideMenu} from '../../components/side-menu/side-menu.component';
 import {Icon} from '../../components/icon/icon.component';
-import {getFullName, getMenuItemsByPosition, getPositionString} from '../../features/user/utils';
+import {getFullName, getMenuItemsByPosition, getPositionString} from '../../features/utils';
 import {MenuItemProps} from './main-layout.model';
 import {logout} from '../../features/auth/store/auth.actions';
 import {CookieService} from 'ngx-cookie-service';
@@ -32,22 +32,21 @@ export class MainLayout {
   private authService = inject(AuthService);
 
   user$: Observable<User | null>;
-  menuItems = signal<MenuItemProps[]>([])
+  loading$: Observable<boolean>;
 
   constructor(private store: Store<{ user: UserState }>) {
     this.user$ = store.select(state => state.user.user)
-
-    this.user$.subscribe(user => {
-      this.menuItems.set(getMenuItemsByPosition(user?.position))
-    })
+    this.loading$ = store.select(state => state.user.loading)
   }
 
   protected readonly getPositionString = getPositionString;
   protected readonly getFullName = getFullName;
 
   logout(){
-    this.authService.logout().subscribe(
-      res => {
+    this.authService.logout().pipe(
+      take(1),
+    ).subscribe(
+      () => {
         this.store.dispatch(logout())
         this.cookieService.delete("userId")
         this.cookieService.delete("accessToken")
@@ -55,4 +54,6 @@ export class MainLayout {
       }
     )
   }
+
+  protected readonly getMenuItemsByPosition = getMenuItemsByPosition;
 }

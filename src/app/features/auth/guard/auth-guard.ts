@@ -1,7 +1,7 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {inject} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {of, switchMap, map, take} from 'rxjs';
+import {of, switchMap, map, take, Observable} from 'rxjs';
 import {AuthState} from '../store/auth.reducers';
 import {CookieService} from 'ngx-cookie-service';
 import {loginSuccess} from '../store/auth.actions';
@@ -16,6 +16,24 @@ export const authGuard: CanActivateFn = () => {
   const cookieService = inject(CookieService);
   const userService = inject(UserService);
 
+  const tryFetchUser = (userId: string): Observable<boolean> => {
+    return userService.getUserById({userId}).pipe(
+      take(1),
+      map(res => {
+        if (!res?.email) {
+          router.navigate(['/auth/login'])
+          return false
+        }
+
+        store.dispatch(getUserSuccess({
+          userId,
+          ...res,
+        } as User))
+        return true
+      })
+    )
+  }
+
   return store.select<string>(state => state.auth.userId).pipe(
     take(1),
     switchMap(uid => {
@@ -28,21 +46,7 @@ export const authGuard: CanActivateFn = () => {
               return of(true)
             }
 
-            return userService.getUserById({userId: uid}).pipe(
-              take(1),
-              map(res => {
-                if (!res?.email) {
-                  router.navigate(['/auth/login'])
-                  return false
-                }
-
-                store.dispatch(getUserSuccess({
-                  userId: uid,
-                  ...res,
-                } as User))
-                return true
-              })
-            )
+            return tryFetchUser(uid)
           })
         )
       }
@@ -57,21 +61,7 @@ export const authGuard: CanActivateFn = () => {
 
       store.dispatch(loginSuccess({userId, accessToken}))
 
-      return userService.getUserById({userId}).pipe(
-        take(1),
-        map(res => {
-          if (!res?.email) {
-            router.navigate(['/auth/login'])
-            return false
-          }
-
-          store.dispatch(getUserSuccess({
-            userId,
-            ...res,
-          } as User))
-          return true
-        })
-      )
+      return tryFetchUser(userId)
     })
   )
 };

@@ -1,8 +1,8 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Button} from "../../../../components/button/button.component";
 import {Input} from "../../../../components/input/input.component";
 import {FormControl, Validators} from '@angular/forms';
-import {login, loginSuccess, register, registerFailure, registerSuccess} from '../../store/auth.actions';
+import {register, registerFailure, registerSuccess} from '../../store/auth.actions';
 import {Store} from '@ngrx/store';
 import {AuthState} from '../../store/auth.reducers';
 import {AuthService} from '../../api/auth.service';
@@ -55,8 +55,12 @@ export class RegisterPage {
         this.store.dispatch(registerSuccess())
         this.router.navigate(['/auth/login']);
       },
-      error: () => {
-        this.store.dispatch(registerFailure({error: "Ошибка"}))
+      error: (err) => {
+        const errorMsg = err?.detail || "Ошибка регистрации";
+
+        // TODO: Уведомлять об ошибке
+
+        this.store.dispatch(registerFailure({error: errorMsg}))
       }
     })
   }
