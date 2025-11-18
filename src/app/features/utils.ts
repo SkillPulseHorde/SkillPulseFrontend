@@ -9,7 +9,7 @@ export const getExpirationTime = () => {
 
 export const getFullName = (user: User | null) => {
   if (user) {
-    return `${user.lastName} ${user.firstName.slice(0, 1)}.${user.midName && user.midName.slice(0, 1) + "."}`;
+    return `${user.lastName} ${user.firstName.slice(0, 1)}.${user.midName ? user.midName.slice(0, 1) + "." : ""}`;
   }
   return '';
 }
@@ -75,4 +75,8 @@ export const getMenuItemsByPosition = (position: Position | undefined | null): M
     ]
     default: return baseMenu
   }
+}
+
+const removeAuthCookies = () => {
+  
 }

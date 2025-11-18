@@ -15,3 +15,7 @@ export const getUserFailure = createAction(
   '[User] Get User Failure',
   props<{ error: string }>()
 )
+
+export const clearUser = createAction(
+  '[User] Clear User',
+)

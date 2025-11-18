@@ -56,7 +56,9 @@ export class RegisterPage {
         this.router.navigate(['/auth/login']);
       },
       error: (err) => {
-        const errorMsg = err?.detail || "Ошибка регистрации";
+        const errorMsg = err.error.detail || "Ошибка регистрации";
+
+        console.log(errorMsg);
 
         // TODO: Уведомлять об ошибке
 

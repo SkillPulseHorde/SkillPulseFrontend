@@ -65,8 +65,13 @@ export class LoginPage {
         this.router.navigate(['/app'])
       },
       error: err => {
-        const errorMessage = err.detail ?? "Ошибка авторизации"
-        this.store.dispatch(loginFailure({error: errorMessage}));
+        const errorMsg = err.error.detail ?? "Ошибка авторизации"
+
+        console.log(errorMsg);
+
+        // TODO: Уведомлять об ошибке
+
+        this.store.dispatch(loginFailure({error: errorMsg}));
       }
     })
   }

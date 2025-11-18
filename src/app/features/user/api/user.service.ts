@@ -11,6 +11,6 @@ export class UserService {
   private http = inject(HttpClient);
 
   getUserById({userId} : GetUserRequestProps): Observable<GetUserResponse> {
-    return this.http.get<GetUserResponse>(`${environment.apiGatewayUrl}/api/users/${userId}`).pipe()
+    return this.http.get<GetUserResponse>(`${environment.apiGatewayUrl}/api/users/${userId}`)
   }
 }

@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {User} from '../../features/user/store/user.model';
@@ -8,9 +8,7 @@ import {UserState} from '../../features/user/store/user.reducers';
 import {SideMenu} from '../../components/side-menu/side-menu.component';
 import {Icon} from '../../components/icon/icon.component';
 import {getFullName, getMenuItemsByPosition, getPositionString} from '../../features/utils';
-import {MenuItemProps} from './main-layout.model';
 import {logout} from '../../features/auth/store/auth.actions';
-import {CookieService} from 'ngx-cookie-service';
 import {AuthService} from '../../features/auth/api/auth.service';
 
 @Component({
@@ -28,7 +26,6 @@ import {AuthService} from '../../features/auth/api/auth.service';
 
 export class MainLayout {
   private router = inject(Router);
-  private cookieService = inject(CookieService);
   private authService = inject(AuthService);
 
   user$: Observable<User | null>;
@@ -48,8 +45,6 @@ export class MainLayout {
     ).subscribe(
       () => {
         this.store.dispatch(logout())
-        this.cookieService.delete("userId")
-        this.cookieService.delete("accessToken")
         this.router.navigate(['/auth/login']);
       }
     )

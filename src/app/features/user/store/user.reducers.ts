@@ -34,4 +34,6 @@ export const userReducer = createReducer(
     error,
     loading: false,
   })),
+
+  on(UserActions.clearUser, () => initialState),
 );

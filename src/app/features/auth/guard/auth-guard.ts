@@ -8,7 +8,6 @@ import {loginSuccess} from '../store/auth.actions';
 import {UserService} from '../../user/api/user.service';
 import {UserState} from '../../user/store/user.reducers';
 import {getUserSuccess} from '../../user/store/user.actions';
-import {User} from '../../user/store/user.model';
 
 export const authGuard: CanActivateFn = () => {
   const store = inject(Store<{ auth: AuthState, user: UserState }>);
@@ -27,8 +26,15 @@ export const authGuard: CanActivateFn = () => {
 
         store.dispatch(getUserSuccess({
           userId,
-          ...res,
-        } as User))
+          firstName: res.firstName,
+          lastName: res.lastName,
+          midName: res.midName,
+          email: res.email,
+          grade: res.grade,
+          teamName: res.teamName,
+          managerId: res.managerId,
+          position: res.position
+        }))
         return true
       })
     )
@@ -37,7 +43,6 @@ export const authGuard: CanActivateFn = () => {
   return store.select<string>(state => state.auth.userId).pipe(
     take(1),
     switchMap(uid => {
-
       if (uid) {
         return store.select(state => state.user.user).pipe(
           take(1),

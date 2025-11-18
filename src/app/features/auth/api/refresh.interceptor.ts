@@ -21,8 +21,6 @@ export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
     ).subscribe(
       () => {
         store.dispatch(logout());
-        cookieService.delete('accessToken');
-        cookieService.delete('userId');
         router.navigate(['/auth/login']);
       }
     )
@@ -30,7 +28,7 @@ export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 && !req.url.includes('/auth/refresh')) {
+      if (error.status === 401 && !req.url.includes('/auth/refresh') && !req.url.includes('/auth/login')) {
         return store.select(state => state.auth.userId).pipe(
           take(1),
           switchMap(userId => {
@@ -51,7 +49,7 @@ export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
                     sameSite: 'Strict'
                   })
                   const uid = userId ?? cookieService.get('userId');
-                  cookieService.set("userId", uid , {
+                  cookieService.set("userId", uid, {
                     path: "/",
                     expires: getExpirationTime(),
                     sameSite: 'Strict'

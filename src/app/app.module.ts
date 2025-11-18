@@ -11,12 +11,15 @@ import {routes} from "./app.routes";
 import {userReducer} from './features/user/store/user.reducers';
 import {authInterceptor} from './features/auth/api/auth.interceptor';
 import {refreshInterceptor} from './features/auth/api/refresh.interceptor';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthEffects} from './features/auth/store/auth.effects';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     RouterOutlet,
+    EffectsModule.forRoot([AuthEffects]),
     StoreModule.forRoot({ auth: authReducer, user: userReducer }),
   ],
   providers: [
