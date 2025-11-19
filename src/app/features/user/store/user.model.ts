@@ -1,0 +1,21 @@
+export type Position = "Employee" | "ProductManager" | "DepartmentManager" | "HR"
+export type Grade = "J1" | "J2" | "J3" | "M1" | "M2" | "M3" | "S"
+
+export interface User extends GetUserResponse {
+  userId: string;
+}
+
+export interface GetUserRequestProps {
+  userId: string;
+}
+
+export interface GetUserResponse {
+  firstName: string,
+  lastName: string,
+  midName: string,
+  email: string,
+  grade: Grade,
+  teamName: string,
+  managerId: string,
+  position: Position
+}

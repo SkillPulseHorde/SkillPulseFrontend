@@ -1,14 +1,14 @@
-import {Component, computed, effect, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Button} from "../../../../components/button/button.component";
 import {Input} from "../../../../components/input/input.component";
 import {FormControl, Validators} from '@angular/forms';
-import {login, loginSuccess, register, registerFailure, registerSuccess} from '../../store/auth.actions';
+import {register, registerFailure, registerSuccess} from '../../store/auth.actions';
 import {Store} from '@ngrx/store';
 import {AuthState} from '../../store/auth.reducers';
 import {AuthService} from '../../api/auth.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'register-page',
@@ -24,7 +24,9 @@ import {RouterLink} from '@angular/router';
 })
 
 export class RegisterPage {
-  authService: AuthService;
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
   loading$: Observable<boolean>
 
   email = new FormControl("", [Validators.required, Validators.email]);
@@ -33,7 +35,6 @@ export class RegisterPage {
 
   constructor(private store: Store<{ auth: AuthState }>) {
     this.loading$ = store.select<boolean>((state) => state.auth.loading);
-    this.authService = new AuthService();
 
     this.passwordConfirm.valueChanges.subscribe(value => {
       if (value === this.password.value) {
@@ -52,9 +53,16 @@ export class RegisterPage {
     }).subscribe({
       next: () => {
         this.store.dispatch(registerSuccess())
+        this.router.navigate(['/auth/login']);
       },
-      error: () => {
-        this.store.dispatch(registerFailure({error: "Ошибка"}))
+      error: (err) => {
+        const errorMsg = err.error.detail || "Ошибка регистрации";
+
+        console.log(errorMsg);
+
+        // TODO: Уведомлять об ошибке
+
+        this.store.dispatch(registerFailure({error: errorMsg}))
       }
     })
   }

@@ -1,14 +1,17 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Button} from '../../../../components/button/button.component';
 import {Input} from '../../../../components/input/input.component';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthState} from '../../store/auth.reducers';
-import {Observable} from 'rxjs';
+import {Observable, take} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AuthService} from '../../api/auth.service';
 import {login, loginFailure, loginSuccess} from '../../store/auth.actions';
 import {AsyncPipe} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+import {getUser} from '../../../user/store/user.actions';
+import {CookieService} from 'ngx-cookie-service';
+import {getExpirationTime} from '../../../utils';
 
 @Component({
   selector: 'login-page',
@@ -25,7 +28,10 @@ import {RouterLink} from '@angular/router';
 })
 
 export class LoginPage {
-  authService: AuthService;
+  private router = inject(Router);
+  private cookieService = inject(CookieService);
+  private authService = inject(AuthService);
+
   loading$: Observable<boolean>
 
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -33,11 +39,6 @@ export class LoginPage {
 
   constructor(private store: Store<{ auth: AuthState }>) {
     this.loading$ = store.select<boolean>((state) => state.auth.loading);
-    this.authService = new AuthService();
-
-    this.loading$.subscribe(loading => {
-      console.log("Загрузка ", loading);
-    })
   }
 
   protected onSubmit = (): void => {
@@ -45,12 +46,32 @@ export class LoginPage {
     this.authService.login({
       email: this.email.value!,
       password: this.password.value!
-    }).subscribe({
+    }).pipe(
+      take(1),
+    ).subscribe({
       next: res => {
         this.store.dispatch(loginSuccess(res))
+        this.store.dispatch(getUser())
+        this.cookieService.set("accessToken", res.accessToken, {
+          path: "/",
+          expires: getExpirationTime(),
+          sameSite: 'Strict'
+        })
+        this.cookieService.set("userId", res.userId, {
+          path: "/",
+          expires: getExpirationTime(),
+          sameSite: 'Strict'
+        })
+        this.router.navigate(['/app'])
       },
       error: err => {
-        this.store.dispatch(loginFailure({error: "Ошибка"}));
+        const errorMsg = err.error.detail ?? "Ошибка авторизации"
+
+        console.log(errorMsg);
+
+        // TODO: Уведомлять об ошибке
+
+        this.store.dispatch(loginFailure({error: errorMsg}));
       }
     })
   }
