@@ -16,8 +16,8 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(logout),
         tap(() => {
-          this.cookieService.delete("accessToken")
-          this.cookieService.delete("userId")
+          this.cookieService.delete("accessToken", "/")
+          this.cookieService.delete("userId", "/")
         }),
         map(() => clearUser())
       )

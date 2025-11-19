@@ -7,7 +7,8 @@ import {User} from '../../store/user.model';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../store/user.reducers';
 import {AsyncPipe} from '@angular/common';
-import {getFullName, getPositionString} from '../../utils';
+import { getFullName, getPositionString } from '../../../utils';
+import {ReviewersList} from '../../components/reviewers-list/reviewers-list.component';
 
 @Component({
   selector: 'profile-page',
@@ -16,7 +17,8 @@ import {getFullName, getPositionString} from '../../utils';
     ReactiveFormsModule,
     Avatar,
     Icon,
-    AsyncPipe
+    AsyncPipe,
+    ReviewersList
   ],
   standalone: true,
   styleUrl: 'profile-page.component.css'

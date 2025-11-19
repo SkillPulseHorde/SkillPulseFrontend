@@ -1,0 +1,22 @@
+<app-fieldset title="Выберите рецензентов">
+  <app-search hint="Найдите коллег, которые оценят ваши soft skills. Можно искать по ФИО" (onQueryChanged)="searchEvaluators($event)" />
+  <div class="reviewersList">
+    @for (user of users(); track user.id) {
+      @if (reviewers().includes(user.id)) {
+        <reviewers-list-item [user]="user" [checked]="reviewers().includes(user.id)"
+                             (checkboxClicked)="toggleEvaluator($event)"/>
+      }
+    }
+    @for (user of filteredUsers(); track user.id) {
+      @if (!reviewers().includes(user.id)) {
+        <reviewers-list-item [user]="user" [checked]="reviewers().includes(user.id)"
+                             (checkboxClicked)="toggleEvaluator($event)"/>
+      }
+    }
+  </div>
+  <div class="controlSection">
+    <span>Выбрано: {{reviewers().length}}</span>
+    <app-button label="Назначить рецензентов" (buttonClick)="updateEvaluatorsList()"
+                [disabled]="reviewers().sort().join('') === initialReviewers().sort().join('')"/>
+  </div>
+</app-fieldset>

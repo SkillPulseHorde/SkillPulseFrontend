@@ -1,4 +1,4 @@
-import {Position, User} from './user/store/user.model';
+import {Position, Reviewer, User} from './user/store/user.model';
 import {MenuItemProps} from '../layout/main-layout/main-layout.model';
 
 const TOKENS_EXPIRATION_HOURS = 6
@@ -7,9 +7,16 @@ export const getExpirationTime = () => {
   return new Date(new Date().getTime() + TOKENS_EXPIRATION_HOURS * 3600 * 1000);
 }
 
-export const getFullName = (user: User | null) => {
+export const getFullNameWithInitials = (user: User | Reviewer | null) => {
   if (user) {
     return `${user.lastName} ${user.firstName.slice(0, 1)}.${user.midName ? user.midName.slice(0, 1) + "." : ""}`;
+  }
+  return '';
+}
+
+export const getFullName = (user: User | Reviewer | null) => {
+  if (user) {
+    return `${user.lastName} ${user.firstName}${user.midName ? " "+user.midName : ""}`;
   }
   return '';
 }
@@ -75,8 +82,4 @@ export const getMenuItemsByPosition = (position: Position | undefined | null): M
     ]
     default: return baseMenu
   }
-}
-
-const removeAuthCookies = () => {
-  
 }

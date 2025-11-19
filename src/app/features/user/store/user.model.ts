@@ -5,6 +5,15 @@ export interface User extends GetUserResponse {
   userId: string;
 }
 
+export interface Reviewer {
+  id: string;
+  firstName: string;
+  lastName: string;
+  midName: string;
+  teamName: string;
+  position: Position;
+}
+
 export interface GetUserRequestProps {
   userId: string;
 }
@@ -18,4 +27,8 @@ export interface GetUserResponse {
   teamName: string,
   managerId: string,
   position: Position
+}
+
+export interface GetUsersRequestProps {
+  userId: string;
 }
