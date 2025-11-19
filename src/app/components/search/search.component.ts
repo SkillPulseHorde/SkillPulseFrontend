@@ -2,7 +2,7 @@ import {Component, input, output} from '@angular/core';
 import {Input} from '../input/input.component';
 import {FormControl} from '@angular/forms';
 import {Icon} from '../icon/icon.component';
-import {Subscription} from 'rxjs';
+import {debounceTime, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -24,12 +24,16 @@ export class SearchComponent {
   onQueryChanged = output<string | null>();
 
   ngOnInit() {
-    this.queryChangedSubscription = this.query.valueChanges.subscribe(value => {
+    this.queryChangedSubscription = this.query.valueChanges.pipe(
+      debounceTime(500),
+    ).subscribe(value => {
       this.onQueryChanged.emit(value)
     })
   }
 
   ngOnDestroy() {
+    if (!this.queryChangedSubscription) return
+
     this.queryChangedSubscription.unsubscribe();
   }
 }

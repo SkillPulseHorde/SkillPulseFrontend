@@ -5,7 +5,7 @@ import {Evaluator} from '../../store/user.model';
 import {UserService} from '../../api/user.service';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../store/user.reducers';
-import {Subscription, take} from 'rxjs';
+import {forkJoin, Subscription, take} from 'rxjs';
 import {Button} from '../../../../components/button/button.component';
 import {AssessmentService} from '../../../assessment/api/assessment.service';
 import {NgClass} from '@angular/common';
@@ -70,7 +70,7 @@ export class EvaluatorsList {
         this.initialEvaluators.set(this.evaluators())
       },
       error: (err) => {
-        const errorMsg = err.error.message || "Ошибка обновления списка рецензентов";
+        const errorMsg = err.error.detail || "Ошибка обновления списка рецензентов";
         console.error(errorMsg);
         // TODO: Уведомление об ошибке
       }
@@ -83,37 +83,27 @@ export class EvaluatorsList {
         if (!userId) return
 
         this.userId.set(userId);
-        this.userService.getUsers({userId}).pipe(
-          take(1),
-        ).subscribe({
-          next: users => {
+
+        forkJoin([this.userService.getUsers({userId}), this.assessmentService.getEvaluatorsIds({userId})]).subscribe(
+          ([users, ids]) => {
             this.users.set(users)
             this.filteredUsers.set(users)
-          },
-          error: (err) => {
-            const errorMsg = err.error.detail || "Ошибка получения списка пользователей"
-            console.error(errorMsg);
-            // TODO: Уведомление об ошибке
-          }
-        })
-        this.assessmentService.getEvaluatorsIds({userId}).pipe(
-          take(1),
-        ).subscribe({
-          next: ids => {
             this.evaluators.set(ids)
             this.initialEvaluators.set(ids)
           },
-          error: (err) => {
-            const errorMsg = err.error.detail || "Ошибка получения списка рецензентов"
+          err => {
+            const errorMsg = err.error.detail || "Ошибка получения пользователей и рецензентов"
             console.error(errorMsg);
             // TODO: Уведомление об ошибке
           }
-        })
+        )
       }
     )
   }
 
   ngOnDestroy() {
+    if (!this.evaluatorsListSubscription) return
+
     this.evaluatorsListSubscription.unsubscribe()
   }
 }
