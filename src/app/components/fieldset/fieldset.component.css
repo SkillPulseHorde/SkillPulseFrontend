@@ -1,0 +1,15 @@
+fieldset {
+  padding: 6px 60px 30px 60px;
+  border: 1px solid #DFDFDF;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+legend {
+  font-size: 12px;
+  font-weight: 300;
+  color: #3B3B3B;
+  padding: 6px 14px;
+  margin-left: -14px
+}

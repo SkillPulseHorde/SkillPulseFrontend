@@ -7,7 +7,7 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../features/user/store/user.reducers';
 import {SideMenu} from '../../components/side-menu/side-menu.component';
 import {Icon} from '../../components/icon/icon.component';
-import {getFullName, getMenuItemsByPosition, getPositionString} from '../../features/utils';
+import {getFullNameWithInitials, getMenuItemsByPosition, getPositionString} from '../../features/utils';
 import {logout} from '../../features/auth/store/auth.actions';
 import {AuthService} from '../../features/auth/api/auth.service';
 
@@ -37,7 +37,7 @@ export class MainLayout {
   }
 
   protected readonly getPositionString = getPositionString;
-  protected readonly getFullName = getFullName;
+  protected readonly getFullNameWithInitials = getFullNameWithInitials;
 
   logout(){
     this.authService.logout().pipe(

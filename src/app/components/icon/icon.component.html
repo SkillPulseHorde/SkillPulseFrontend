@@ -1,9 +1,24 @@
 <div class="icon" [style.width.px]="size()" [style.height.px]="size()">
   @switch (type()) {
+    @case ('avatar') {
+      <svg width="85" height="77" viewBox="0 0 85 77" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M60.2761 18C60.2761 27.9411 52.2173 36 42.2761 36C32.335 36 24.2761 27.9411 24.2761 18C24.2761 8.05887 32.335 0 42.2761 0C52.2173 0 60.2761 8.05887 60.2761 18ZM54.2761 18C54.2761 24.6274 48.9035 30 42.2761 30C35.6487 30 30.2761 24.6274 30.2761 18C30.2761 11.3726 35.6487 6 42.2761 6C48.9035 6 54.2761 11.3726 54.2761 18Z"
+              fill="#4F378A"/>
+        <path
+          d="M42.2761 45C22.853 45 6.30395 56.4852 0 72.5761C1.53569 74.1011 3.15342 75.5435 4.84599 76.8962C9.54021 62.1231 24.2663 51 42.2761 51C60.286 51 75.0121 62.1231 79.7063 76.8962C81.3989 75.5435 83.0166 74.1011 84.5523 72.5762C78.2483 56.4853 61.6993 45 42.2761 45Z"
+          fill="#4F378A"/>
+      </svg>
+    }
     @case ('burger') {
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5 30V26.6667H35V30H5ZM5 21.6667V18.3333H35V21.6667H5ZM5 13.3333V10H35V13.3333H5Z"
               fill="currentColor"/>
+      </svg>
+    }
+    @case ('check') {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 16.4L6 12.4L7.4 11L10 13.6L16.6 7L18 8.4L10 16.4Z" fill="currentColor"/>
       </svg>
     }
     @case ('clock') {
@@ -18,6 +33,13 @@
         <path
           d="M10.6666 31.6667L8.33325 29.3334L17.6666 20L8.33325 10.6667L10.6666 8.33337L19.9999 17.6667L29.3333 8.33337L31.6666 10.6667L22.3333 20L31.6666 29.3334L29.3333 31.6667L19.9999 22.3334L10.6666 31.6667Z"
           fill="currentColor"/>
+      </svg>
+    }
+    @case ('email') {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M4 20C3.45 20 2.975 19.8083 2.575 19.425C2.19167 19.025 2 18.55 2 18V6C2 5.45 2.19167 4.98333 2.575 4.6C2.975 4.2 3.45 4 4 4H20C20.55 4 21.0167 4.2 21.4 4.6C21.8 4.98333 22 5.45 22 6V18C22 18.55 21.8 19.025 21.4 19.425C21.0167 19.8083 20.55 20 20 20H4ZM12 13L20 8V6L12 11L4 6V8L12 13Z"
+          fill="#1B1E25"/>
       </svg>
     }
     @case ('logout') {
@@ -52,6 +74,13 @@
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M29.3334 16H24.0001L20.0001 28L12.0001 4L8.00008 16H2.66675" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    }
+    @case ('search') {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M14.76 13.27L20.49 19L19 20.49L13.27 14.76C12.2 15.53 10.91 16 9.5 16C5.91 16 3 13.09 3 9.5C3 5.91 5.91 3 9.5 3C13.09 3 16 5.91 16 9.5C16 10.91 15.53 12.2 14.76 13.27ZM9.5 5C7.01 5 5 7.01 5 9.5C5 11.99 7.01 14 9.5 14C11.99 14 14 11.99 14 9.5C14 7.01 11.99 5 9.5 5Z"
+              fill="currentColor"/>
       </svg>
     }
     @case ('star') {

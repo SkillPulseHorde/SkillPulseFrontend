@@ -1,0 +1,47 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 64px 90px;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: 500;
+  color: #C22918;
+  height: 58px;
+}
+
+.profile {
+  display: flex;
+  gap: 40px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h3 {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    height: 34px;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+span {
+  font-weight: 300;
+  color: #535353;
+}
+
+.email {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}

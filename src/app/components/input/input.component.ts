@@ -1,5 +1,6 @@
 import {Component, input} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {InputVariant} from './input.model';
 
 @Component({
   selector: 'app-input',
@@ -12,5 +13,7 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 })
 export class Input{
   type = input("text")
+  placeholder = input("")
   control = input.required<FormControl>()
+  variant = input<InputVariant>("default")
 }

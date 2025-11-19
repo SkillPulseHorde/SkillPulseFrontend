@@ -14,7 +14,7 @@
             <icon [size]="32" type="person" />
           </div>
           <div class="info">
-            <div class="name">{{getFullName(user)}}</div>
+            <div class="name">{{getFullNameWithInitials(user)}}</div>
             <div class="position">{{getPositionString(user?.position)}}</div>
           </div>
           <div class="logout" (click)="logout()">

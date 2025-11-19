@@ -1,0 +1,17 @@
+.checkbox {
+  border: 2px solid #535353;
+  border-radius: 2px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+}
+
+.checked {
+  border: 2px solid #C22918;
+  background-color: #C22918;
+  color: white;
+}

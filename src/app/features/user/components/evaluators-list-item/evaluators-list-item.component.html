@@ -1,0 +1,9 @@
+<div class="evaluatorsListItem">
+  <avatar [size]="56" />
+  <div class="info">
+    <span class="name">{{getFullName(user())}}</span>
+    <span class="position">{{getPositionString(user().position)}}</span>
+    <span class="team">{{user().teamName}}</span>
+  </div>
+  <checkbox [padding]="15" [checked]="checked()" (checkedChange)="checkboxClick()" />
+</div>

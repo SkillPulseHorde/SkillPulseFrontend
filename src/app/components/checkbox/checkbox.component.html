@@ -1,0 +1,11 @@
+<div [style.padding.px]="padding()">
+    <div [ngClass]="['checkbox', checked() ? 'checked' : '']"
+         role="checkbox"
+         [attr.aria-checked]="checked()"
+         tabindex="0"
+         (keydown.space)="$event.preventDefault(); checkboxClicked()"
+         (keydown.enter)="$event.preventDefault(); checkboxClicked()"
+         (click)="checkboxClicked()">
+        <icon type="check" [size]="24"/>
+    </div>
+</div>

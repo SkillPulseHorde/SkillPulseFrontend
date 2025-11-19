@@ -1,0 +1,27 @@
+.evaluatorsListItem {
+  width: 400px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+}
+
+avatar {
+  margin-right: 20px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20px - 56px - 48px);
+}
+
+span {
+  color: #989898;
+  font-size: 14px;
+}
+
+.name {
+  font-weight: 500;
+  color: #1B1E25;
+  font-size: 16px;
+}

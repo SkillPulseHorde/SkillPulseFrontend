@@ -1,0 +1,11 @@
+<div class="search">
+  <div class="inputWrapper">
+    <button>
+      <icon [size]="24" type="search" />
+    </button>
+    <app-input placeholder="Поиск" variant="search" [control]="query"/>
+  </div>
+  @if (hint()) {
+    <span>{{ hint() }}</span>
+  }
+</div>

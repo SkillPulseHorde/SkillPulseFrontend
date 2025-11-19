@@ -62,7 +62,7 @@ export class LoginPage {
           expires: getExpirationTime(),
           sameSite: 'Strict'
         })
-        this.router.navigate(['/app'])
+        this.router.navigate(['/profile'])
       },
       error: err => {
         const errorMsg = err.error.detail ?? "Ошибка авторизации"

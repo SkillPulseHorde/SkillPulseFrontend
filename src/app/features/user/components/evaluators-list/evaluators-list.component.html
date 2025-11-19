@@ -1,0 +1,17 @@
+<app-fieldset title="Выберите рецензентов">
+  <app-search hint="Найдите коллег, которые оценят ваши soft skills. Можно искать по ФИО"
+              (onQueryChanged)="searchEvaluators($event)"/>
+  <div class="evaluatorsList">
+    @for (user of filteredUsers(); track user.id) {
+      <evaluators-list-item [user]="user" [checked]="evaluators().includes(user.id)"
+                            (checkboxClicked)="toggleEvaluator($event)" [ngClass]="{
+                           'checked': evaluators().includes(user.id)
+                           }"/>
+    }
+  </div>
+  <div class="controlSection">
+    <span>Выбрано: {{ evaluators().length }}</span>
+    <app-button label="Назначить рецензентов" (buttonClick)="updateEvaluatorsList()"
+                [disabled]="areEvaluatorsListsEqual()"/>
+  </div>
+</app-fieldset>
