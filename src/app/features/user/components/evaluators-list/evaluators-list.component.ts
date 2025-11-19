@@ -5,7 +5,7 @@ import {Evaluator} from '../../store/user.model';
 import {UserService} from '../../api/user.service';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../store/user.reducers';
-import {take} from 'rxjs';
+import {Subscription, take} from 'rxjs';
 import {Button} from '../../../../components/button/button.component';
 import {AssessmentService} from '../../../assessment/api/assessment.service';
 import {NgClass} from '@angular/common';
@@ -28,13 +28,15 @@ export class EvaluatorsList {
   assessmentService = inject(AssessmentService)
   store = inject(Store<{ user: UserState }>)
 
+  evaluatorsListSubscription!: Subscription;
+
   userId = signal("")
   users = signal<Evaluator[]>([])
   filteredUsers = signal<Evaluator[]>([])
   evaluators = signal<string[]>([])
   initialEvaluators = signal<string[]>([])
 
-  areEvaluatorsListsEqual = computed(() => [...this.evaluators()].sort().join('') === [...this.initialEvaluators()].sort().join(''))
+  areEvaluatorsListsEqual = computed(() => [...this.evaluators()].sort().join('#') === [...this.initialEvaluators()].sort().join('#'))
 
   searchEvaluators(query: string | null) {
     if (!query) {
@@ -61,7 +63,9 @@ export class EvaluatorsList {
   }
 
   updateEvaluatorsList() {
-    this.assessmentService.updateEvaluatorsIds({userId: this.userId(), evaluatorIds: this.evaluators()}).subscribe({
+    this.assessmentService.updateEvaluatorsIds({userId: this.userId(), evaluatorIds: this.evaluators()}).pipe(
+      take(1),
+    ).subscribe({
       next: () => {
         this.initialEvaluators.set(this.evaluators())
       },
@@ -74,28 +78,42 @@ export class EvaluatorsList {
   }
 
   ngOnInit() {
-    this.store.select(state => state.user.user?.userId).subscribe(
+    this.evaluatorsListSubscription = this.store.select(state => state.user.user?.userId).subscribe(
       userId => {
         if (!userId) return
 
         this.userId.set(userId);
         this.userService.getUsers({userId}).pipe(
           take(1),
-        ).subscribe(
-          users => {
+        ).subscribe({
+          next: users => {
             this.users.set(users)
             this.filteredUsers.set(users)
+          },
+          error: (err) => {
+            const errorMsg = err.error.detail || "Ошибка получения списка пользователей"
+            console.error(errorMsg);
+            // TODO: Уведомление об ошибке
           }
-        )
+        })
         this.assessmentService.getEvaluatorsIds({userId}).pipe(
           take(1),
-        ).subscribe(
-          ids => {
+        ).subscribe({
+          next: ids => {
             this.evaluators.set(ids)
             this.initialEvaluators.set(ids)
+          },
+          error: (err) => {
+            const errorMsg = err.error.detail || "Ошибка получения списка рецензентов"
+            console.error(errorMsg);
+            // TODO: Уведомление об ошибке
           }
-        )
+        })
       }
-    ).unsubscribe()
+    )
+  }
+
+  ngOnDestroy() {
+    this.evaluatorsListSubscription.unsubscribe()
   }
 }

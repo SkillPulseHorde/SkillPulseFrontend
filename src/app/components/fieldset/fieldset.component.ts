@@ -7,5 +7,5 @@ import {Component, input} from '@angular/core';
   styleUrl: './fieldset.component.css'
 })
 export class Fieldset {
-  title = input.required();
+  title = input.required<string>();
 }

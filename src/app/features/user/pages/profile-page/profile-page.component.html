@@ -1,15 +1,17 @@
+@let user = user$ | async;
+
 <div class="page">
   <h1 class="pageTitle">Личный кабинет</h1>
   <div class="profile">
-    <avatar [size]="120" />
+    <avatar [size]="120"/>
     <div class="info">
-      <h3>{{getFullName(user$ | async)}}</h3>
-      <h4>Грейд {{(user$ | async)?.grade}}</h4>
-      <span>{{getPositionString((user$ | async)?.position)}}</span>
-      <span>Команда {{(user$ | async)?.teamName}}</span>
+      <h3>{{ getFullName(user) }}</h3>
+      <h4>Грейд {{ user?.grade }}</h4>
+      <span>{{ getPositionString(user?.position) }}</span>
+      <span>Команда {{ user?.teamName }}</span>
       <div class="email">
-        <icon type="email" [size]="24" />
-        <span>{{(user$ | async)?.email}}</span>
+        <icon type="email" [size]="24"/>
+        <span>{{ user?.email }}</span>
       </div>
     </div>
   </div>
