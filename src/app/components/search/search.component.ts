@@ -1,7 +1,8 @@
 import {Component, input, output} from '@angular/core';
 import {Input} from '../input/input.component';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {Icon} from '../icon/icon.component';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -18,11 +19,17 @@ export class SearchComponent {
 
   query = new FormControl('');
 
+  queryChangedSubscription!: Subscription;
+
   onQueryChanged = output<string | null>();
 
   ngOnInit() {
-    this.query.valueChanges.subscribe(value => {
-      this.onQueryChanged.emit(this.query.value)
+    this.queryChangedSubscription = this.query.valueChanges.subscribe(value => {
+      this.onQueryChanged.emit(value)
     })
+  }
+
+  ngOnDestroy() {
+    this.queryChangedSubscription.unsubscribe();
   }
 }

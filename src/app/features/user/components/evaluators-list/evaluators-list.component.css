@@ -1,13 +1,19 @@
-.reviewersList {
+.evaluatorsList {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 30px 100px;
   height: 264px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
-reviewers-list-item {
+evaluators-list-item {
   height: min-content;
+  order: 1;
+}
+
+evaluators-list-item.checked {
+  order: -1;
 }
 
 .controlSection {

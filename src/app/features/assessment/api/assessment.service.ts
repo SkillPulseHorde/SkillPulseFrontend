@@ -16,7 +16,6 @@ export class AssessmentService {
 
   updateEvaluatorsIds({userId, evaluatorIds}: UpdateEvaluatorsIdsRequestProps): Observable<object> {
     return this.http.put(`${environment.apiGatewayUrl}/api/assessments/evaluators/${userId}`, {
-      userId,
       evaluatorIds
     })
   }

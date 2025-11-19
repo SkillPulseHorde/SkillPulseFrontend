@@ -1,20 +1,20 @@
 import {Component, input, output} from '@angular/core';
 import {Avatar} from '../../../../components/avatar/avatar.component';
-import {Reviewer} from '../../store/user.model';
+import {Evaluator} from '../../store/user.model';
 import {getFullName, getPositionString} from '../../../utils';
 import {Checkbox} from '../../../../components/checkbox/checkbox.component';
 
 @Component({
-  selector: 'reviewers-list-item',
+  selector: 'evaluators-list-item',
   imports: [
     Avatar,
     Checkbox
   ],
-  templateUrl: './reviewers-list-item.component.html',
-  styleUrl: './reviewers-list-item.component.css'
+  templateUrl: './evaluators-list-item.component.html',
+  styleUrl: './evaluators-list-item.component.css'
 })
-export class ReviewersListItem {
-  user = input.required<Reviewer>();
+export class EvaluatorsListItem {
+  user = input.required<Evaluator>();
   checked = input(false);
   checkboxClicked = output<string>();
 

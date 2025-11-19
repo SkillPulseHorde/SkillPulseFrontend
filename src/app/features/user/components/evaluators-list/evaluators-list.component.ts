@@ -1,36 +1,40 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {SearchComponent} from '../../../../components/search/search.component';
-import {Reviewer, User} from '../../store/user.model';
+import {Evaluator} from '../../store/user.model';
 import {UserService} from '../../api/user.service';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../store/user.reducers';
 import {take} from 'rxjs';
-import {ReviewersListItem} from '../reviewers-list-item/reviewers-list-item.component';
 import {Button} from '../../../../components/button/button.component';
 import {AssessmentService} from '../../../assessment/api/assessment.service';
+import {NgClass} from '@angular/common';
+import {EvaluatorsListItem} from '../evaluators-list-item/evaluators-list-item.component';
 
 @Component({
-  selector: 'reviewers-list',
+  selector: 'evaluators-list',
   imports: [
     Fieldset,
     SearchComponent,
-    ReviewersListItem,
-    Button
+    Button,
+    NgClass,
+    EvaluatorsListItem,
   ],
-  templateUrl: './reviewers-list.component.html',
-  styleUrl: './reviewers-list.component.css'
+  templateUrl: './evaluators-list.component.html',
+  styleUrl: './evaluators-list.component.css'
 })
-export class ReviewersList {
+export class EvaluatorsList {
   userService = inject(UserService)
   assessmentService = inject(AssessmentService)
   store = inject(Store<{ user: UserState }>)
 
   userId = signal("")
-  users = signal<Reviewer[]>([])
-  filteredUsers = signal<Reviewer[]>([])
-  reviewers = signal<string[]>([])
-  initialReviewers = signal<string[]>([])
+  users = signal<Evaluator[]>([])
+  filteredUsers = signal<Evaluator[]>([])
+  evaluators = signal<string[]>([])
+  initialEvaluators = signal<string[]>([])
+
+  areEvaluatorsListsEqual = computed(() => [...this.evaluators()].sort().join('') === [...this.initialEvaluators()].sort().join(''))
 
   searchEvaluators(query: string | null) {
     if (!query) {
@@ -38,31 +42,33 @@ export class ReviewersList {
       return
     }
 
-    this.filteredUsers.set(this.users().filter(reviewer => {
+    this.filteredUsers.set(this.users().filter(evaluator => {
         const q = query.toLowerCase()
-        return reviewer.lastName?.toLowerCase().startsWith(q) ||
-          reviewer.firstName?.toLowerCase().startsWith(q) ||
-          reviewer.midName?.toLowerCase().startsWith(q)
+        return evaluator.lastName?.toLowerCase().startsWith(q) ||
+          evaluator.firstName?.toLowerCase().startsWith(q) ||
+          evaluator.midName?.toLowerCase().startsWith(q) ||
+          this.evaluators().includes(evaluator.id)
       }
     ))
   }
 
   toggleEvaluator(userId: string) {
-    if (this.reviewers().includes(userId)) {
-      this.reviewers.set(this.reviewers().filter(id => id !== userId));
+    if (this.evaluators().includes(userId)) {
+      this.evaluators.set(this.evaluators().filter(id => id !== userId));
     } else {
-      this.reviewers.set([...this.reviewers(), userId]);
+      this.evaluators.set([...this.evaluators(), userId]);
     }
   }
 
   updateEvaluatorsList() {
-    this.assessmentService.updateEvaluatorsIds({userId: this.userId(), evaluatorIds: this.reviewers()}).subscribe({
+    this.assessmentService.updateEvaluatorsIds({userId: this.userId(), evaluatorIds: this.evaluators()}).subscribe({
       next: () => {
-        this.initialReviewers.set(this.reviewers())
+        this.initialEvaluators.set(this.evaluators())
       },
       error: (err) => {
         const errorMsg = err.error.message || "Ошибка обновления списка рецензентов";
         console.error(errorMsg);
+        // TODO: Уведомление об ошибке
       }
     })
   }
@@ -70,6 +76,8 @@ export class ReviewersList {
   ngOnInit() {
     this.store.select(state => state.user.user?.userId).subscribe(
       userId => {
+        if (!userId) return
+
         this.userId.set(userId);
         this.userService.getUsers({userId}).pipe(
           take(1),
@@ -83,11 +91,11 @@ export class ReviewersList {
           take(1),
         ).subscribe(
           ids => {
-            this.reviewers.set(ids)
-            this.initialReviewers.set(ids)
+            this.evaluators.set(ids)
+            this.initialEvaluators.set(ids)
           }
         )
       }
-    )
+    ).unsubscribe()
   }
 }

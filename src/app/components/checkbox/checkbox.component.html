@@ -1,5 +1,8 @@
 <div [style.padding.px]="padding()">
-  <div [ngClass]="['checkbox', checked() ? 'checked' : '']">
-    <icon type="check" [size]="24"/>
-  </div>
+    <div [ngClass]="['checkbox', checked() ? 'checked' : '']"
+         role="checkbox"
+         [attr.aria-checked]="checked()"
+         tabindex="0">
+        <icon type="check" [size]="24"/>
+    </div>
 </div>

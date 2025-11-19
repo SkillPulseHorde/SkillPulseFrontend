@@ -5,7 +5,8 @@ export interface User extends GetUserResponse {
   userId: string;
 }
 
-export interface Reviewer {
+// Данные рецензента
+export interface Evaluator {
   id: string;
   firstName: string;
   lastName: string;

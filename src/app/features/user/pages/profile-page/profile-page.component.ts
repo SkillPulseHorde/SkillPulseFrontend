@@ -8,7 +8,7 @@ import {Store} from '@ngrx/store';
 import {UserState} from '../../store/user.reducers';
 import {AsyncPipe} from '@angular/common';
 import { getFullName, getPositionString } from '../../../utils';
-import {ReviewersList} from '../../components/reviewers-list/reviewers-list.component';
+import {EvaluatorsList} from '../../components/evaluators-list/evaluators-list.component';
 
 @Component({
   selector: 'profile-page',
@@ -18,7 +18,7 @@ import {ReviewersList} from '../../components/reviewers-list/reviewers-list.comp
     Avatar,
     Icon,
     AsyncPipe,
-    ReviewersList
+    EvaluatorsList
   ],
   standalone: true,
   styleUrl: 'profile-page.component.css'
