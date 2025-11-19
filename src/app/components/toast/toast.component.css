@@ -1,0 +1,28 @@
+.toast {
+    width: 320px;
+    min-height: 54px;
+    border-radius: 10px;
+    color: #3B3B3B !important;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.success {
+    background-color: #F1FFF4;
+    border: 1px solid #C0ECD4;
+
+    icon {
+        color: #439F6E;
+    }
+}
+
+.error {
+    background-color: #FDF2F2;
+    border: 1px solid #C22918;
+
+    icon {
+        color: #F93232;
+    }
+}

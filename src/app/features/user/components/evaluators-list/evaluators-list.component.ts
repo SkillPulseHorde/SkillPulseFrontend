@@ -10,6 +10,7 @@ import {Button} from '../../../../components/button/button.component';
 import {AssessmentService} from '../../../assessment/api/assessment.service';
 import {NgClass} from '@angular/common';
 import {EvaluatorsListItem} from '../evaluators-list-item/evaluators-list-item.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'evaluators-list',
@@ -26,6 +27,7 @@ import {EvaluatorsListItem} from '../evaluators-list-item/evaluators-list-item.c
 export class EvaluatorsList {
   userService = inject(UserService)
   assessmentService = inject(AssessmentService)
+  toastService = inject(ToastrService)
   store = inject(Store<{ user: UserState }>)
 
   evaluatorsListSubscription!: Subscription;
@@ -68,11 +70,11 @@ export class EvaluatorsList {
     ).subscribe({
       next: () => {
         this.initialEvaluators.set(this.evaluators())
+        this.toastService.success("Список рецензентов успешно обновлён!");
       },
       error: (err) => {
         const errorMsg = err.error.detail || "Ошибка обновления списка рецензентов";
-        console.error(errorMsg);
-        // TODO: Уведомление об ошибке
+        this.toastService.error(errorMsg);
       }
     })
   }
@@ -93,8 +95,7 @@ export class EvaluatorsList {
           },
           err => {
             const errorMsg = err.error.detail || "Ошибка получения пользователей и рецензентов"
-            console.error(errorMsg);
-            // TODO: Уведомление об ошибке
+            this.toastService.error(errorMsg);
           }
         )
       }
