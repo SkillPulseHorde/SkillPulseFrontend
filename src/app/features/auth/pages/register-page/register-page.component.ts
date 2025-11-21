@@ -9,6 +9,7 @@ import {AuthService} from '../../api/auth.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'register-page',
@@ -26,6 +27,7 @@ import {Router, RouterLink} from '@angular/router';
 export class RegisterPage {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private toastService = inject(ToastrService)
 
   loading$: Observable<boolean>
 
@@ -53,15 +55,12 @@ export class RegisterPage {
     }).subscribe({
       next: () => {
         this.store.dispatch(registerSuccess())
+        this.toastService.success("Вы успешно зарегистрировались");
         this.router.navigate(['/auth/login']);
       },
       error: (err) => {
         const errorMsg = err.error.detail || "Ошибка регистрации";
-
-        console.log(errorMsg);
-
-        // TODO: Уведомлять об ошибке
-
+        this.toastService.error(errorMsg);
         this.store.dispatch(registerFailure({error: errorMsg}))
       }
     })

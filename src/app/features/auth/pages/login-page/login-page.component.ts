@@ -12,6 +12,7 @@ import {Router, RouterLink} from '@angular/router';
 import {getUser} from '../../../user/store/user.actions';
 import {CookieService} from 'ngx-cookie-service';
 import {getExpirationTime} from '../../../utils';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'login-page',
@@ -31,6 +32,7 @@ export class LoginPage {
   private router = inject(Router);
   private cookieService = inject(CookieService);
   private authService = inject(AuthService);
+  private toastService = inject(ToastrService);
 
   loading$: Observable<boolean>
 
@@ -66,11 +68,7 @@ export class LoginPage {
       },
       error: err => {
         const errorMsg = err.error.detail ?? "Ошибка авторизации"
-
-        console.log(errorMsg);
-
-        // TODO: Уведомлять об ошибке
-
+        this.toastService.error(errorMsg);
         this.store.dispatch(loginFailure({error: errorMsg}));
       }
     })

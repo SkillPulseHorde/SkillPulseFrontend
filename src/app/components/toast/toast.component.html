@@ -1,0 +1,13 @@
+@let type = toastPackage.toastType;
+
+<div class="toast" [ngClass]="type">
+    @switch (toastPackage.toastType) {
+        @case ('success') {
+            <icon type="success" [size]="24"/>
+        }
+        @case ('error') {
+            <icon type="error" [size]="24"/>
+        }
+    }
+    <div>{{ message }}</div>
+</div>
