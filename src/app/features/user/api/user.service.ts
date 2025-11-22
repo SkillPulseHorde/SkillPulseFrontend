@@ -14,7 +14,7 @@ export class UserService {
     return this.http.get<GetUserResponse>(`${environment.apiGatewayUrl}/api/users/${userId}`)
   }
 
-  getUsers({userId}: GetUsersRequestProps): Observable<Evaluator[]> {
-    return this.http.get<Evaluator[]>(`${environment.apiGatewayUrl}/api/users?currentUserId=${userId}`)
+  getUsers({userId, includeCurrentUser}: GetUsersRequestProps): Observable<Evaluator[]> {
+    return this.http.get<Evaluator[]>(`${environment.apiGatewayUrl}/api/users?currentUserId=${userId}&includeCurrentUser=${includeCurrentUser}`);
   }
 }

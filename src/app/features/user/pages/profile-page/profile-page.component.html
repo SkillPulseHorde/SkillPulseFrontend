@@ -15,5 +15,7 @@
       </div>
     </div>
   </div>
-  <evaluators-list/>
+  @if (user) {
+    <evaluators-list [userId]="user.userId"/>
+  }
 </div>
