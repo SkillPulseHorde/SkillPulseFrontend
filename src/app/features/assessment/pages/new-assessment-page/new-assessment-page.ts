@@ -3,7 +3,7 @@ import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {FormControl} from '@angular/forms';
 import {EvaluatorsList} from '../../../user/components/evaluators-list/evaluators-list.component';
 import {Button} from '../../../../components/button/button.component';
-import {Subscription, take} from 'rxjs';
+import {take} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../user/store/user.reducers';
 import {UserService} from '../../../user/api/user.service';
@@ -113,8 +113,10 @@ export class NewAssessmentPage {
       if (!date) return
 
       const d = new Date(date)
+      const nextDay = new Date(d)
+      nextDay.setDate(nextDay.getDate() + 1)
 
-      this.minEndDate.set(new Date(d.setDate(d.getDate() + 1)))
+      this.minEndDate.set(new Date(nextDay))
     })
   }
 

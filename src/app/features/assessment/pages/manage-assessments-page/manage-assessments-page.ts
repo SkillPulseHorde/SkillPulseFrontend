@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {AssessmentComponent} from '../../components/assessment/assessment.component';
 import {ModalService} from '../../../../components/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'manage-assessments-page',
@@ -39,7 +40,9 @@ export class ManageAssessmentsPage {
 
   constructor() {
     effect(() => {
-      this.assessmentService.getAssessments({isActive: this.isActive()}).subscribe({
+      this.assessmentService.getAssessments({isActive: this.isActive()}).pipe(
+        takeUntilDestroyed()
+      ).subscribe({
         next: assessments => {
           this.assessments.set(assessments);
         },
