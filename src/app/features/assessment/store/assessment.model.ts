@@ -1,3 +1,5 @@
+import {Position} from '../../user/store/user.model';
+
 export interface GetEvaluatorsIdsRequestProps {
   userId: string;
 }
@@ -23,7 +25,7 @@ export interface Assessment {
   id: string;
   evaluateeId: string;
   evaluateeFullName: string;
-  evaluateePosition: string;
+  evaluateePosition: Position;
   evaluateeTeamName: string;
   startAt: Date;
   endsAt: Date;

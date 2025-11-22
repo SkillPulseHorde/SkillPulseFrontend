@@ -39,10 +39,14 @@ export class ManageAssessmentsPage {
 
   constructor() {
     effect(() => {
-      this.assessmentService.getAssessments({isActive: this.isActive()}).pipe(
-        take(1),
-      ).subscribe(assessments => {
-        this.assessments.set(assessments);
+      this.assessmentService.getAssessments({isActive: this.isActive()}).subscribe({
+        next: assessments => {
+          this.assessments.set(assessments);
+        },
+        error: err => {
+          const errorMsg = err.error.detail || "Ошибка получения списка аттестаций"
+          this.toastService.error(errorMsg)
+        }
       })
     });
   }

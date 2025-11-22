@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, inject, input, output, signal} from '@angular/core';
+import {Component, ElementRef, HostListener, inject, input, signal} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SidebarItem} from './sidebar-item/sidebar-item.component';
 import {MenuItem} from './menu-item/menu-item.component';

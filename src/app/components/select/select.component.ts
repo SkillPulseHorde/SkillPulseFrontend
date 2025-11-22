@@ -39,4 +39,11 @@ export class SelectComponent {
     this.queryChanged.emit("");
     this.isOpen.set(false);
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    if (!this.el.nativeElement.contains(event.target)) {
+      this.isOpen.set(false);
+    }
+  }
 }

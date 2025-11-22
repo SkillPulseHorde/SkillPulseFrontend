@@ -1,7 +1,7 @@
 import {Component, computed, input, output} from '@angular/core';
 import {Assessment} from '../../store/assessment.model';
 import {Avatar} from '../../../../components/avatar/avatar.component';
-import {formatDate} from '../../../utils';
+import {formatDate, getPositionString} from '../../../utils';
 import {Icon} from '../../../../components/icon/icon.component';
 
 @Component({
@@ -30,4 +30,5 @@ export class AssessmentComponent {
   }
 
   deadlines = computed<string>(() => `${formatDate(this.assessment().startAt)} - ${formatDate(this.assessment().endsAt)}`);
+  protected readonly getPositionString = getPositionString;
 }

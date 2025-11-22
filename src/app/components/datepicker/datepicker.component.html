@@ -1,2 +1,2 @@
 <input [placeholder]="placeholder()" type="date" [formControl]="control()"
-       [min]="minDate() ? minDate()!.toISOString().split('T')[0] : null"/>
+       [attr.min]="minDate() ? minDate()!.toISOString().split('T')[0] : null"/>

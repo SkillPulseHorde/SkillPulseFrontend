@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, signal} from '@angular/core';
+import {Component, computed, effect, inject, input, signal, untracked} from '@angular/core';
 import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {SearchComponent} from '../../../../components/search/search.component';
 import {Evaluator} from '../../store/user.model';
@@ -100,7 +100,9 @@ export class EvaluatorsList {
 
   constructor() {
     effect(() => {
-      this.fetchEvaluators()
+      if (!this.userId()) return
+
+      untracked(() => this.fetchEvaluators())
     });
   }
 }

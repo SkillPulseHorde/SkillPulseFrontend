@@ -1,6 +1,5 @@
-import {Component, effect, input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {InputVariant} from '../input/input.model';
 
 @Component({
   selector: 'datepicker',

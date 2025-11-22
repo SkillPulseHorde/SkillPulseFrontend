@@ -14,8 +14,8 @@
   </app-fieldset>
   <app-fieldset title="Сотрудник для оценки">
     <div class="formItem">
-      <label for="startDate">Выберите сотрудника для оценки</label>
-      <app-select placeholder="ФИО" [options]="selectOptions()" [selected]="selectedOption()"
+      <label for="evaluatee">Выберите сотрудника для оценки</label>
+      <app-select id="evaluatee" placeholder="ФИО" [options]="selectOptions()" [selected]="selectedOption()"
                   (optionSelected)="selectOption($event)" (queryChanged)="searchEvaluators($event)"/>
     </div>
   </app-fieldset>

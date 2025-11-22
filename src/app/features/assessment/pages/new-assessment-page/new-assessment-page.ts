@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal, viewChild} from '@angular/core';
+import {Component, computed, inject, signal, viewChild} from '@angular/core';
 import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {FormControl} from '@angular/forms';
 import {EvaluatorsList} from '../../../user/components/evaluators-list/evaluators-list.component';
@@ -15,6 +15,7 @@ import {SelectOption} from '../../../../components/select/select.model';
 import {AssessmentService} from '../../api/assessment.service';
 import {Router} from '@angular/router';
 import {Datepicker} from '../../../../components/datepicker/datepicker.component';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'new-assessment-page',
@@ -29,7 +30,6 @@ import {Datepicker} from '../../../../components/datepicker/datepicker.component
   styleUrl: './new-assessment-page.css',
 })
 export class NewAssessmentPage {
-  usersListSubscription!: Subscription;
   store = inject(Store<{ user: UserState }>)
   userService = inject(UserService)
   assessmentService = inject(AssessmentService);
@@ -85,7 +85,9 @@ export class NewAssessmentPage {
   evaluatorsList = viewChild(EvaluatorsList);
 
   ngOnInit() {
-    this.usersListSubscription = this.store.select(state => state.user.user?.userId).subscribe(
+    this.store.select(state => state.user.user?.userId).pipe(
+      take(1)
+    ).subscribe(
       userId => {
         if (!userId) return
 
@@ -105,14 +107,15 @@ export class NewAssessmentPage {
         )
       }
     )
-    this.startDate.valueChanges.subscribe(date => {
+    this.startDate.valueChanges.pipe(
+      takeUntilDestroyed()
+    ).subscribe(date => {
       if (!date) return
 
       const d = new Date(date)
 
       this.minEndDate.set(new Date(d.setDate(d.getDate() + 1)))
     })
-
   }
 
   isFormValid() {
