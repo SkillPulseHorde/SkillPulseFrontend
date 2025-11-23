@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Icon} from '../../icon/icon.component';
 
@@ -16,5 +16,11 @@ export class MenuItem{
   iconSize = input.required<number>();
   srcIcon = input.required<string>();
   title = input.required<string>();
+  path = input.required<string>();
   notification = input<number | null>(null);
+  onItemClick = output<string>()
+
+  onClick() {
+    this.onItemClick.emit(this.path())
+  }
 }

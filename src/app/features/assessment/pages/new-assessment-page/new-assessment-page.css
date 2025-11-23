@@ -1,0 +1,26 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 64px 90px;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: 500;
+  color: #C22918;
+  height: 58px;
+}
+
+.formSection {
+  display: flex;
+  gap: 44px;
+}
+
+.formItem {
+  flex: 1;
+}
+
+.startAssessmentButton {
+  align-self: flex-end;
+}

@@ -25,7 +25,7 @@ export class SearchComponent {
 
   ngOnInit() {
     this.queryChangedSubscription = this.query.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(250),
     ).subscribe(value => {
       this.onQueryChanged.emit(value)
     })

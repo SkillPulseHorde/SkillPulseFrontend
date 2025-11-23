@@ -1,0 +1,5 @@
+<div class="tab" [ngClass]="{
+'active': isActive()
+}" (click)="tabClicked(id())">
+  {{ title() }}
+</div>

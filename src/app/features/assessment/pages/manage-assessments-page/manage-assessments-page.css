@@ -1,0 +1,54 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 64px 90px;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: 500;
+  color: #C22918;
+  height: 58px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 8px 20px;
+}
+
+.assessmentList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 128px;
+}
+
+.noAssessments {
+  color: #535353;
+}
+
+.deleteModal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  span {
+    color: #1B1E25;
+    font-size: 24px;
+  }
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}

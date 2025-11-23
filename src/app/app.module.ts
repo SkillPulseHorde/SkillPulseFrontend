@@ -16,6 +16,7 @@ import {AuthEffects} from './features/auth/store/auth.effects';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppToast} from './components/toast/toast.component';
+import {Modal} from "./components/modal/modal.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import {AppToast} from './components/toast/toast.component';
         error: "error",
       }
     }),
+    Modal,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

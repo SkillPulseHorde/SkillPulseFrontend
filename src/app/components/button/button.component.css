@@ -42,6 +42,24 @@ button:hover::before {
   width: 0;
 }
 
+.secondary {
+  border-color: #DFDFDF;
+  color: #c22918;
+}
+
+.secondary:hover {
+  border-color: #c22918;
+  color: white;
+}
+
+.secondary::before {
+  width: 0;
+}
+
+.secondary:hover::before {
+  width: 100%;
+}
+
 button:disabled {
   border-color: #BFBFBF;
   background-color: #BFBFBF;

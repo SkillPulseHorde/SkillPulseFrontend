@@ -1,0 +1,42 @@
+.assessmentListItem {
+  width: 700px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 445px);
+}
+
+span {
+  color: #989898;
+  font-size: 14px;
+}
+
+.name {
+  font-weight: 500;
+  color: #1B1E25;
+  font-size: 16px;
+}
+
+.deadlines {
+  color: #1B1E25;
+  padding: 0 34px;
+  width: 245px;
+}
+
+icon {
+  padding: 4px;
+  color: #c22918;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 100%;
+}
+
+icon:hover {
+  cursor: pointer;
+  background-color: rgba(194, 41, 24, 0.25);
+}

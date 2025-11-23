@@ -1,0 +1,14 @@
+@if (modal.isOpen()) {
+  <div class="overlay" (click)="modal.onBackdropClick($event)">
+    <div class="modal">
+      <div class="header">
+        <span class="title">{{ modal.title() }}</span>
+        <icon [size]="24" type="close" (click)="modal.close()"/>
+      </div>
+      <ng-container
+        *ngTemplateOutlet="modal.content()">
+      </ng-container>
+    </div>
+  </div>
+}
+

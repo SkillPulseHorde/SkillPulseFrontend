@@ -1,0 +1,33 @@
+<div class="page">
+  <h1 class="pageTitle">Управление аттестациями</h1>
+  <div class="navbar">
+    <div class="tabs">
+      <tab [id]="0" title="Активные" [isActive]="isActive()" (onClick)="toggleIsActive()"/>
+      <tab [id]="1" title="Предстоящие" [isActive]="!isActive()" (onClick)="toggleIsActive()"/>
+    </div>
+    <app-button label="Запуск новой аттестации" (buttonClick)="onNewAssessmentButtonClick()"/>
+  </div>
+  <app-fieldset [title]="isActive() ? 'Активные аттестации' : 'Предстоящие аттестации'">
+    <div class="assessmentList">
+      @for (assessment of assessments(); track assessment.id) {
+        <assessment [assessment]="assessment" [isEditable]="true" [isDeletable]="true"
+                    (editButtonClicked)="onEditAssessmentButtonClick($event)"
+                    (deleteButtonClicked)="onDeleteAssessmentButtonClick($event)"/>
+      }
+      @if (assessments().length === 0) {
+        <span
+          class="noAssessments">{{ isActive() ? "Нет активных периодов оценивания" : "Нет предстоящих периодов оценивания" }}</span>
+      }
+    </div>
+  </app-fieldset>
+</div>
+
+<ng-template #deleteModal>
+  <div class="deleteModal">
+    <span>Вы уверены, что хотите удалить эту аттестацию?</span>
+    <div class="control">
+      <app-button (buttonClick)="this.modalService.close()" variant="secondary" label="Отмена"/>
+      <app-button (buttonClick)="this.deleteAssessment()" label="Удалить"/>
+    </div>
+  </div>
+</ng-template>

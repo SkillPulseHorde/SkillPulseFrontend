@@ -1,0 +1,23 @@
+<div class="selectWrapper">
+  <div class="selectDisplay" [ngClass]="{
+  'active': isOpen()
+  }" (click)="toggleSelect()">
+    {{ selectedLabel() || placeholder() }}
+    <div class="arrow">
+      <icon type="arrow" [size]="24"/>
+    </div>
+  </div>
+
+  @if (isOpen()) {
+    <div class="dropdown">
+      <app-search (onQueryChanged)="onQueryChange($event)"/>
+      <div class="options">
+        @for (option of options(); track option.value) {
+          <div class="option" (click)="selectOption(option.value)">
+            {{option.label}}
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
