@@ -58,7 +58,7 @@ export class ManageAssessmentsPage {
   }
 
   onEditAssessmentButtonClick(id: string) {
-    console.log("EDIT:", id)
+    this.router.navigate([`manage-assessments/edit`, id]);
   }
 
   onDeleteAssessmentButtonClick(id: string) {

@@ -1,6 +1,7 @@
 <div class="selectWrapper">
   <div class="selectDisplay" [ngClass]="{
-  'active': isOpen()
+  'disabled': disabled(),
+  'active': isOpen() && !disabled()
   }" (click)="toggleSelect()">
     {{ selectedLabel() || placeholder() }}
     <div class="arrow">
@@ -8,7 +9,7 @@
     </div>
   </div>
 
-  @if (isOpen()) {
+  @if (isOpen() && !disabled()) {
     <div class="dropdown">
       <app-search (onQueryChanged)="onQueryChange($event)"/>
       <div class="options">

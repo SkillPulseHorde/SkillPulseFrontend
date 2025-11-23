@@ -7,6 +7,11 @@ input {
   outline: none;
 }
 
+.disabled {
+  border: #dfdfdf;
+  color: #bfbfbf;
+}
+
 input:focus {
   border-color: #C22918;
 }

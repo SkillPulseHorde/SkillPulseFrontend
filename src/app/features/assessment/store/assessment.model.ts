@@ -13,11 +13,21 @@ export interface GetAssessmentsRequestProps {
   isActive: boolean;
 }
 
+export interface GetAssessmentRequestProps {
+  assessmentId: string;
+}
+
 export interface StartAssessmentRequestProps {
   evaluateeId: string;
   startAt: Date;
   endsAt: Date;
   createdByUserId: string;
+  evaluatorIds: string[];
+}
+
+export interface UpdateAssessmentRequestProps {
+  assessmentId: string;
+  endsAt: Date;
   evaluatorIds: string[];
 }
 
@@ -29,4 +39,5 @@ export interface Assessment {
   evaluateeTeamName: string;
   startAt: Date;
   endsAt: Date;
+  evaluatorIds: string[];
 }

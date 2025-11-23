@@ -16,4 +16,5 @@ export class Input{
   placeholder = input("")
   control = input.required<FormControl>()
   variant = input<InputVariant>("default")
+  disabled = input<boolean>(false)
 }

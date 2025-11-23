@@ -3,9 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {map, Observable, take} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {
-  Assessment,
+  Assessment, GetAssessmentRequestProps,
   GetAssessmentsRequestProps,
-  GetEvaluatorsIdsRequestProps, StartAssessmentRequestProps,
+  GetEvaluatorsIdsRequestProps, StartAssessmentRequestProps, UpdateAssessmentRequestProps,
   UpdateEvaluatorsIdsRequestProps
 } from '../store/assessment.model';
 
@@ -36,8 +36,26 @@ export class AssessmentService {
     )
   }
 
+  getAssessment({assessmentId}: GetAssessmentRequestProps): Observable<Assessment> {
+    return this.http.get<Assessment>(`${environment.apiGatewayUrl}/api/assessments/${assessmentId}`).pipe(
+      take(1),
+      map(assessment => ({
+        ...assessment,
+        startAt: new Date(assessment.startAt),
+        endsAt: new Date(assessment.endsAt),
+      }))
+    )
+  }
+
   startAssessment(data: StartAssessmentRequestProps) {
     return this.http.post(`${environment.apiGatewayUrl}/api/assessments`, data)
+  }
+
+  updateAssessment({assessmentId, endsAt, evaluatorIds}: UpdateAssessmentRequestProps) {
+    return this.http.put(`${environment.apiGatewayUrl}/api/assessments/${assessmentId}`, {
+      endsAt,
+      evaluatorIds
+    })
   }
 
   deleteAssessment(assessmentId: string) {

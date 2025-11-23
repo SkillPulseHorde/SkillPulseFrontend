@@ -1,7 +1,8 @@
 .sideMenu {
-  position: relative;
   height: 100%;
   z-index: 1;
+  position: relative;
+  position: fixed;
 }
 
 .out {

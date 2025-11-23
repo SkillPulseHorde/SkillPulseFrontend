@@ -1,0 +1,29 @@
+<div class="page">
+  <h1 class="pageTitle">Редактировать аттестацию</h1>
+  <app-fieldset title="Период оценивания">
+    <div class="formSection">
+      <div class="formItem">
+        <label for="startDate">Дата начала периода</label>
+        <datepicker id="startDate" placeholder="дд.мм.гггг" [control]="startDate" [minDate]="today()"
+                    [disabled]="true"/>
+      </div>
+      <div class="formItem">
+        <label for="endDate">Дата окончания периода</label>
+        <datepicker id="endDate" placeholder="дд.мм.гггг" [control]="endDate" [minDate]="minEndDate()"/>
+      </div>
+    </div>
+  </app-fieldset>
+  <app-fieldset title="Сотрудник для оценки">
+    <div class="formItem">
+      <label for="evaluatee">Выберите сотрудника для оценки</label>
+      <app-select [disabled]="true" id="evaluatee" placeholder="ФИО" [options]="selectOptions()"
+                  [selected]="selectedOption()"/>
+    </div>
+  </app-fieldset>
+  @if (selected()) {
+    <evaluators-list [userId]="selected()" [assessmentEvaluatorsId]="assessment() ? assessment()!.evaluatorIds : []" title="Рецензенты" [isEditable]="false" [disabled]="isActive()" [ngClass]="{
+    'disabled': isActive()
+    }"/>
+  }
+  <app-button class="editAssessmentButton" label="Сохранить" (buttonClick)="editAssessment()"/>
+</div>
