@@ -32,4 +32,5 @@ export interface GetUserResponse {
 
 export interface GetUsersRequestProps {
   userId: string;
+  includeCurrentUser: boolean;
 }

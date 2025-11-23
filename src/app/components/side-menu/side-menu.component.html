@@ -12,7 +12,7 @@
       <div class="divider"></div>
       <div class="sidebarItems">
         @for (item of menuItems(); track item.id) {
-          <sidebar-item [srcIcon]="item.srcIcon" />
+          <sidebar-item [srcIcon]="item.srcIcon" [path]="item.path" (onItemClick)="onItemClicked($event)"/>
         }
       </div>
     }
@@ -21,7 +21,8 @@
     <div class="menuTitle">Навигация</div>
     <div class="menuItems">
       @for (item of menuItems(); track item.id) {
-        <menu-item [iconSize]="20" [srcIcon]="item.srcIcon" [title]="item.title" />
+        <menu-item [iconSize]="20" [srcIcon]="item.srcIcon" [title]="item.title" [path]="item.path"
+                   (onItemClick)="onItemClicked($event)"/>
       }
     </div>
   </div>

@@ -1,0 +1,15 @@
+.tab {
+  font-weight: 300;
+  text-decoration: underline;
+  color: #989898;
+  transition: all .2s ease-in-out;
+}
+
+.tab:hover {
+  color: #c22918;
+  cursor: pointer;
+}
+
+.active {
+  color: #c22918;
+}

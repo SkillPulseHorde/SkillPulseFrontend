@@ -1,11 +1,11 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, DestroyRef, effect, inject, input, signal, untracked} from '@angular/core';
 import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {SearchComponent} from '../../../../components/search/search.component';
 import {Evaluator} from '../../store/user.model';
 import {UserService} from '../../api/user.service';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../store/user.reducers';
-import {forkJoin, Subscription, take} from 'rxjs';
+import {forkJoin, take} from 'rxjs';
 import {Button} from '../../../../components/button/button.component';
 import {AssessmentService} from '../../../assessment/api/assessment.service';
 import {NgClass} from '@angular/common';
@@ -30,9 +30,10 @@ export class EvaluatorsList {
   toastService = inject(ToastrService)
   store = inject(Store<{ user: UserState }>)
 
-  evaluatorsListSubscription!: Subscription;
+  userId = input.required<string>();
+  title = input<string>('Выберите рецензентов')
+  isEditable = input<boolean>(true);
 
-  userId = signal("")
   users = signal<Evaluator[]>([])
   filteredUsers = signal<Evaluator[]>([])
   evaluators = signal<string[]>([])
@@ -79,32 +80,29 @@ export class EvaluatorsList {
     })
   }
 
-  ngOnInit() {
-    this.evaluatorsListSubscription = this.store.select(state => state.user.user?.userId).subscribe(
-      userId => {
-        if (!userId) return
-
-        this.userId.set(userId);
-
-        forkJoin([this.userService.getUsers({userId}), this.assessmentService.getEvaluatorsIds({userId})]).subscribe(
-          ([users, ids]) => {
-            this.users.set(users)
-            this.filteredUsers.set(users)
-            this.evaluators.set(ids)
-            this.initialEvaluators.set(ids)
-          },
-          err => {
-            const errorMsg = err.error.detail || "Ошибка получения пользователей и рецензентов"
-            this.toastService.error(errorMsg);
-          }
-        )
+  fetchEvaluators() {
+    forkJoin([this.userService.getUsers({
+      userId: this.userId(),
+      includeCurrentUser: false
+    }), this.assessmentService.getEvaluatorsIds({userId: this.userId()})]).subscribe(
+      ([users, ids]) => {
+        this.users.set(users)
+        this.filteredUsers.set(users)
+        this.evaluators.set(ids)
+        this.initialEvaluators.set(ids)
+      },
+      err => {
+        const errorMsg = err.error.detail || "Ошибка получения пользователей и рецензентов"
+        this.toastService.error(errorMsg);
       }
     )
   }
 
-  ngOnDestroy() {
-    if (!this.evaluatorsListSubscription) return
+  constructor() {
+    effect(() => {
+      if (!this.userId()) return
 
-    this.evaluatorsListSubscription.unsubscribe()
+      untracked(() => this.fetchEvaluators())
+    });
   }
 }

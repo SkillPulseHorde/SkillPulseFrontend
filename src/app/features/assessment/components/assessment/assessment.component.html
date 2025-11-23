@@ -1,0 +1,17 @@
+<div class="assessmentListItem">
+  <avatar [size]="56"/>
+  <div class="info">
+    <span class="name">{{ assessment().evaluateeFullName }}</span>
+    <span class="position">{{ getPositionString(assessment().evaluateePosition) }}</span>
+    <span class="team">{{ assessment().evaluateeTeamName }}</span>
+  </div>
+  <div class="deadlines">
+    {{ deadlines() }}
+  </div>
+  @if (isEditable()) {
+    <icon [size]="24" type="edit" (click)="onEditButtonClick()" />
+  }
+  @if (isDeletable()) {
+    <icon [size]="24" type="close" (click)="onDeleteButtonClicked()" />
+  }
+</div>

@@ -35,17 +35,20 @@ const baseMenu: MenuItemProps[] = [
   {
     id: 1,
     srcIcon: 'person',
-    title: 'Личный кабинет'
+    title: 'Личный кабинет',
+    path: "profile"
   },
   {
     id: 2,
     srcIcon: 'pulse',
-    title: 'Мои результаты'
+    title: 'Мои результаты',
+    path: "results"
   },
   {
     id: 3,
     srcIcon: 'star',
-    title: "Оценивание"
+    title: "Оценивание",
+    path: "assessments"
   }
 ]
 
@@ -56,7 +59,8 @@ export const getMenuItemsByPosition = (position: Position | undefined | null): M
       {
         id: 4,
         srcIcon: 'people',
-        title: "Моя команда"
+        title: "Моя команда",
+        path: "my-team"
       }
     ]
     case 'DepartmentManager': return [
@@ -64,7 +68,8 @@ export const getMenuItemsByPosition = (position: Position | undefined | null): M
       {
         id: 4,
         srcIcon: 'people',
-        title: "Моя команда"
+        title: "Моя команда",
+        path: "my-team"
       }
     ]
     case 'HR': return [
@@ -72,14 +77,23 @@ export const getMenuItemsByPosition = (position: Position | undefined | null): M
       {
         id: 4,
         srcIcon: 'people',
-        title: "Сотрудники"
+        title: "Сотрудники",
+        path: "employees"
       },
       {
         id: 5,
         srcIcon: 'clock',
-        title: "Управление аттестациями"
+        title: "Управление аттестациями",
+        path: "manage-assessments"
       }
     ]
     default: return baseMenu
   }
+}
+
+export const formatDate = (date: Date) => {
+  const dd = String(date.getDate()).padStart(2, '0');
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const yyyy = date.getFullYear();
+  return `${dd}.${mm}.${yyyy}`;
 }
