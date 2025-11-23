@@ -1,2 +1,3 @@
 <input [placeholder]="placeholder()" type="date" [formControl]="control()"
+       (keydown)="$event.preventDefault()"
        [attr.min]="minDate() ? minDate()!.toISOString().split('T')[0] : null"/>

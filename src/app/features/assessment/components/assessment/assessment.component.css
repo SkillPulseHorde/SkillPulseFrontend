@@ -9,7 +9,7 @@
 .info {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 441px);
+  width: calc(100% - 445px);
 }
 
 span {
@@ -26,6 +26,7 @@ span {
 .deadlines {
   color: #1B1E25;
   padding: 0 34px;
+  width: 245px;
 }
 
 icon {

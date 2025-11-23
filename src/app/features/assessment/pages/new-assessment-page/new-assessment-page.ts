@@ -3,7 +3,7 @@ import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {FormControl} from '@angular/forms';
 import {EvaluatorsList} from '../../../user/components/evaluators-list/evaluators-list.component';
 import {Button} from '../../../../components/button/button.component';
-import {take} from 'rxjs';
+import {take, takeUntil} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../user/store/user.reducers';
 import {UserService} from '../../../user/api/user.service';
@@ -40,7 +40,7 @@ export class NewAssessmentPage {
   endDate = new FormControl<string | null>(null);
 
   today = signal(new Date());
-  minEndDate = signal<Date | null>(null);
+  minEndDate = signal<Date | null>(new Date(new Date().setDate(new Date().getDate() + 1)));
 
   userId = signal("")
 
@@ -107,9 +107,7 @@ export class NewAssessmentPage {
         )
       }
     )
-    this.startDate.valueChanges.pipe(
-      takeUntilDestroyed()
-    ).subscribe(date => {
+    this.startDate.valueChanges.subscribe(date => {
       if (!date) return
 
       const d = new Date(date)
