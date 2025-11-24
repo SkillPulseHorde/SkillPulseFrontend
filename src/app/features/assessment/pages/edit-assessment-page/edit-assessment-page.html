@@ -1,3 +1,5 @@
+@let assessment = this.assessment();
+
 <div class="page">
   <h1 class="pageTitle">Редактировать аттестацию</h1>
   <app-fieldset title="Период оценивания">
@@ -20,7 +22,7 @@
     </div>
   </app-fieldset>
   @if (selected()) {
-    <evaluators-list [userId]="selected()" [assessmentEvaluatorsId]="assessment() ? assessment()!.evaluatorIds : []" title="Рецензенты" [isEditable]="false" [disabled]="isActive()" [ngClass]="{
+    <evaluators-list [userId]="selected()" [assessmentEvaluatorsId]="assessment ? assessment!.evaluatorIds : []" title="Рецензенты" [isEditable]="false" [disabled]="isActive()" [ngClass]="{
     'disabled': isActive()
     }"/>
   }

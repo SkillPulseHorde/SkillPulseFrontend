@@ -65,7 +65,9 @@ export class EditAssessmentPage implements OnInit {
   evaluatorsList = viewChild(EvaluatorsList);
 
   constructor() {
-    this.activatedRoute.params.subscribe((params) => {
+    this.activatedRoute.params.pipe(
+      take(1)
+    ).subscribe((params) => {
       const id = params['id'];
       if (!id) {
         this.router.navigate(['/manage-assessments']);
@@ -98,10 +100,11 @@ export class EditAssessmentPage implements OnInit {
       next: assessment => {
         this.assessment.set(assessment);
 
-        const nextDay = new Date()
+        const nextDay = new Date(assessment.startAt)
         nextDay.setDate(nextDay.getDate() + 1)
 
         this.minEndDate.set(new Date(nextDay))
+
         this.startDate.setValue(assessment.startAt.toISOString().split('T')[0])
         this.endDate.setValue(assessment.endsAt.toISOString().split('T')[0])
 
