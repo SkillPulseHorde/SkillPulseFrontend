@@ -76,7 +76,7 @@ export class EvaluatorsList {
     ).subscribe({
       next: () => {
         this.initialEvaluators.set(this.evaluators())
-        this.toastService.success("Список рецензентов успешно обновлён!");
+        this.toastService.success("Список рецензентов успешно сохранён. HR-менеджер будет учитывать ваши пожелания");
       },
       error: (err) => {
         const errorMsg = err.error?.detail || "Ошибка обновления списка рецензентов";
