@@ -1,17 +1,22 @@
-<div class="assessmentListItem">
+<div class="assessmentListItem" [ngClass]="{
+    'clickable': isClickable(),
+    'mini': !isEditable() && !isDeletable()
+  }" (click)="onAssessmentClick()">
   <avatar [size]="56"/>
   <div class="info">
     <span class="name">{{ assessment().evaluateeFullName }}</span>
     <span class="position">{{ getPositionString(assessment().evaluateePosition) }}</span>
     <span class="team">{{ assessment().evaluateeTeamName }}</span>
   </div>
-  <div class="deadlines">
+  <div class="deadlines" [ngClass]="{
+    'column': isEditable() || isDeletable()
+  }">
     {{ deadlines() }}
   </div>
   @if (isEditable()) {
-    <icon [size]="24" type="edit" (click)="onEditButtonClick()" />
+    <icon [size]="24" type="edit" (click)="onEditButtonClick()"/>
   }
   @if (isDeletable()) {
-    <icon [size]="24" type="close" (click)="onDeleteButtonClicked()" />
+    <icon [size]="24" type="close" (click)="onDeleteButtonClicked()"/>
   }
 </div>

@@ -1,0 +1,26 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 64px 90px;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: 500;
+  color: #C22918;
+  height: 58px;
+}
+
+.assessmentList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 92px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 20px;
+}
+
+.noAssessments {
+  color: #535353;
+}

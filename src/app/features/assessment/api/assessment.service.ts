@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map, Observable, take} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {
-  Assessment,
+  Assessment, GetActiveAssessmentsByEvaluatorRequestProps,
   GetAssessmentsRequestProps,
   GetEvaluatorsIdsRequestProps, StartAssessmentRequestProps,
   UpdateEvaluatorsIdsRequestProps
@@ -30,6 +30,21 @@ export class AssessmentService {
       take(1),
       map(assessments => assessments.map(assessment => ({
         ...assessment,
+        startAt: new Date(assessment.startAt),
+        endsAt: new Date(assessment.endsAt),
+      })))
+    )
+  }
+
+  getActiveAssessmentsByEvaluator({userId}: GetActiveAssessmentsByEvaluatorRequestProps): Observable<Assessment[]> {
+    return this.http.get<any[]>(`${environment.apiGatewayUrl}/api/assessments/evaluator/${userId}/active`).pipe(
+      take(1),
+      map(assessments => assessments.map(assessment => ({
+        id: assessment.assessmentId,
+        evaluateeId: assessment.evaluateeInfo.id,
+        evaluateeFullName: assessment.evaluateeInfo.fullName,
+        evaluateePosition: assessment.evaluateeInfo.position,
+        evaluateeTeamName: assessment.evaluateeInfo.teamName,
         startAt: new Date(assessment.startAt),
         endsAt: new Date(assessment.endsAt),
       })))

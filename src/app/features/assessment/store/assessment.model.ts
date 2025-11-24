@@ -13,6 +13,10 @@ export interface GetAssessmentsRequestProps {
   isActive: boolean;
 }
 
+export interface GetActiveAssessmentsByEvaluatorRequestProps {
+  userId: string;
+}
+
 export interface StartAssessmentRequestProps {
   evaluateeId: string;
   startAt: Date;
