@@ -76,7 +76,7 @@ export class EditAssessmentPage {
     ).subscribe(
       users => {
         this.users.set(users)
-        this.selected.set(this.assessment()!.evaluateeId)
+        this.selected.set(this.assessment()!.evaluateeInfo.id)
       },
       err => {
         const errorMsg = err.error.detail || "Ошибка получения пользователей"
@@ -97,7 +97,7 @@ export class EditAssessmentPage {
         this.startDate.setValue(assessment.startAt.toISOString().split('T')[0])
         this.endDate.setValue(assessment.endsAt.toISOString().split('T')[0])
 
-        this.fetchUsers(assessment.evaluateeId)
+        this.fetchUsers(assessment.evaluateeInfo.id)
       },
       error: err => {
         const errorMsg = err.error.detail || "Ошибка получения аттестации";
@@ -132,7 +132,7 @@ export class EditAssessmentPage {
     if (!this.isFormValid()) return
 
     this.assessmentService.updateAssessment({
-      assessmentId: this.assessment()!.id,
+      assessmentId: this.assessment()!.assessmentId,
       endsAt: new Date(this.endDate.value!),
       evaluatorIds: this.evaluatorsList()!.evaluators()
     }).pipe(

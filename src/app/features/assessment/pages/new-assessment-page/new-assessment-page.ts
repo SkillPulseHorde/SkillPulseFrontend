@@ -147,8 +147,6 @@ export class NewAssessmentPage {
   startAssessment() {
     if (!this.isFormValid()) return
 
-    this.evaluatorsList()?.updateEvaluatorsList()
-
     this.assessmentService.startAssessment({
       evaluateeId: this.selected(),
       startAt: new Date(this.startDate.value!),

@@ -22,11 +22,11 @@ export class AssessmentComponent {
   deleteButtonClicked = output<string>();
 
   onEditButtonClick() {
-    this.editButtonClicked.emit(this.assessment().id)
+    this.editButtonClicked.emit(this.assessment().assessmentId)
   }
 
   onDeleteButtonClicked() {
-    this.deleteButtonClicked.emit(this.assessment().id)
+    this.deleteButtonClicked.emit(this.assessment().assessmentId)
   }
 
   deadlines = computed<string>(() => `${formatDate(this.assessment().startAt)} - ${formatDate(this.assessment().endsAt)}`);
