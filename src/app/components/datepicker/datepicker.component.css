@@ -7,9 +7,10 @@ input {
   outline: none;
 }
 
-.disabled {
-  border: #dfdfdf;
+input:disabled {
+  border-color: #dfdfdf;
   color: #bfbfbf;
+  background-color: white;
 }
 
 input:focus {

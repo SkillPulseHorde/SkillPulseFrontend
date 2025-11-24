@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal, viewChild} from '@angular/core';
+import {Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Button} from '../../../../components/button/button.component';
 import {Datepicker} from '../../../../components/datepicker/datepicker.component';
@@ -29,7 +29,7 @@ import {NgClass} from '@angular/common';
   templateUrl: './edit-assessment-page.html',
   styleUrl: './edit-assessment-page.css',
 })
-export class EditAssessmentPage {
+export class EditAssessmentPage implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   assessmentService = inject(AssessmentService);
   userService = inject(UserService);
@@ -40,7 +40,7 @@ export class EditAssessmentPage {
   assessment = signal<Assessment | null>(null);
   isActive = computed(() => this.assessment() ? this.assessment()!.startAt.getTime() <= new Date().getTime() : true);
 
-  startDate = new FormControl<string | null>(null);
+  startDate = new FormControl<string | null>({value: null, disabled: true});
   endDate = new FormControl<string | null>(null);
 
   today = signal(new Date());
@@ -66,6 +66,12 @@ export class EditAssessmentPage {
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
+      const id = params['id'];
+      if (!id) {
+        this.router.navigate(['/manage-assessments']);
+        return
+      }
+
       this.assessmentId.set(params['id']);
     });
   }
@@ -75,6 +81,8 @@ export class EditAssessmentPage {
       take(1),
     ).subscribe(
       users => {
+        if (!this.assessment()) return
+
         this.users.set(users)
         this.selected.set(this.assessment()!.evaluateeInfo.id)
       },
@@ -100,8 +108,9 @@ export class EditAssessmentPage {
         this.fetchUsers(assessment.evaluateeInfo.id)
       },
       error: err => {
-        const errorMsg = err.error.detail || "Ошибка получения аттестации";
+        const errorMsg = err.error?.detail || "Ошибка получения аттестации";
         this.toastService.error(errorMsg)
+        this.router.navigate(['/manage-assessments']);
       }
     })
   }

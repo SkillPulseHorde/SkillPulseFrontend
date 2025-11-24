@@ -7,9 +7,10 @@ input {
   outline: none;
 }
 
-.input:disabled {
+input:disabled {
   border-color: #dfdfdf;
-  color: #dfdfdf;
+  color: #bfbfbf;
+  background-color: white;
 }
 
 .search {

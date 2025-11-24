@@ -1,4 +1,4 @@
-import {Component, computed, DestroyRef, effect, inject, input, signal, untracked} from '@angular/core';
+import {Component, computed, effect, inject, input, signal, untracked} from '@angular/core';
 import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {SearchComponent} from '../../../../components/search/search.component';
 import {Evaluator} from '../../store/user.model';

@@ -15,8 +15,9 @@
 }
 
 .disabled {
-  border-color: #dfdfdf;
+  border-color: #DFDFDF;
   color: #BFBFBF;
+  cursor: default;
 }
 
 .arrow {

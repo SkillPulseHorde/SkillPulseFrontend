@@ -1,7 +1,3 @@
 <input [placeholder]="placeholder()" type="date" [formControl]="control()"
-       [ngClass]="{
-       'disabled': disabled()
-       }"
-       [readonly]="disabled()"
        (keydown)="$event.preventDefault()"
        [attr.min]="minDate() ? minDate()!.toISOString().split('T')[0] : null"/>
