@@ -9,7 +9,7 @@
   </div>
   <app-fieldset [title]="isActive() ? 'Активные аттестации' : 'Предстоящие аттестации'">
     <div class="assessmentList">
-      @for (assessment of assessments(); track assessment.id) {
+      @for (assessment of assessments(); track assessment.assessmentId) {
         <assessment [assessment]="assessment" [isEditable]="true" [isDeletable]="true"
                     (editButtonClicked)="onEditAssessmentButtonClick($event)"
                     (deleteButtonClicked)="onDeleteAssessmentButtonClick($event)"/>

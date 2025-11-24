@@ -71,7 +71,7 @@ export class ManageAssessmentsPage {
       take(1),
     ).subscribe({
       next: () => {
-        this.assessments.set(this.assessments().filter(assessment => assessment.id !== this.assessmentToDeleteId()))
+        this.assessments.set(this.assessments().filter(assessment => assessment.assessmentId !== this.assessmentToDeleteId()))
         this.assessmentToDeleteId.set("")
         this.toastService.success("Аттестация успешно удалена")
         this.modalService.close()

@@ -2,7 +2,7 @@
   <h1 class="pageTitle">Оценивание</h1>
   <app-fieldset title="Кого хотите оценить?">
     <div class="assessmentList">
-      @for (assessment of assessments(); track assessment.id) {
+      @for (assessment of assessments(); track assessment.assessmentId) {
         <assessment [assessment]="assessment" [isClickable]="true"
                     (clicked)="onAssessmentClicked($event)"/>
       }

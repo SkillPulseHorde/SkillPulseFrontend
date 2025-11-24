@@ -25,12 +25,17 @@ export interface StartAssessmentRequestProps {
   evaluatorIds: string[];
 }
 
-export interface Assessment {
+interface Evaluatee {
   id: string;
-  evaluateeId: string;
-  evaluateeFullName: string;
-  evaluateePosition: Position;
-  evaluateeTeamName: string;
+  fullName: string;
+  position: Position;
+  teamName: string;
+}
+
+export interface Assessment {
+  assessmentId: string;
   startAt: Date;
   endsAt: Date;
+  evaluateeInfo: Evaluatee
+  evaluatorIds: string[];
 }
