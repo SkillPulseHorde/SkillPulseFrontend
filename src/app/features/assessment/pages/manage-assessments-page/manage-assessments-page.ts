@@ -46,7 +46,7 @@ export class ManageAssessmentsPage {
           this.assessments.set(assessments);
         },
         error: err => {
-          const errorMsg = err.error.detail || "Ошибка получения списка аттестаций"
+          const errorMsg = err.error?.detail || "Ошибка получения списка аттестаций"
           this.toastService.error(errorMsg)
         }
       })
@@ -77,7 +77,7 @@ export class ManageAssessmentsPage {
         this.modalService.close()
       },
       error: err => {
-        const errorMsg = err.error.detail || "Ошибка удаления аттестации"
+        const errorMsg = err.error?.detail || "Ошибка удаления аттестации"
         this.toastService.error(errorMsg)
       }
     })

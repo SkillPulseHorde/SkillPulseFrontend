@@ -100,7 +100,7 @@ export class NewAssessmentPage implements OnInit {
             this.filteredUsers.set(users)
           },
           err => {
-            const errorMsg = err.error.detail || "Ошибка получения пользователей"
+            const errorMsg = err.error?.detail || "Ошибка получения пользователей"
             this.toastService.error(errorMsg);
           }
         )
@@ -160,7 +160,7 @@ export class NewAssessmentPage implements OnInit {
         this.router.navigate(["/manage-assessments"])
       },
       err => {
-        const errorMsg = err.error.detail || "Ошибка запуска аттестации"
+        const errorMsg = err.error?.detail || "Ошибка запуска аттестации"
 
         this.toastService.error(errorMsg)
       }

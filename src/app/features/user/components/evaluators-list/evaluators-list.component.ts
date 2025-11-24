@@ -79,7 +79,7 @@ export class EvaluatorsList {
         this.toastService.success("Список рецензентов успешно обновлён!");
       },
       error: (err) => {
-        const errorMsg = err.error.detail || "Ошибка обновления списка рецензентов";
+        const errorMsg = err.error?.detail || "Ошибка обновления списка рецензентов";
         this.toastService.error(errorMsg);
       }
     })
@@ -97,7 +97,7 @@ export class EvaluatorsList {
         this.initialEvaluators.set(ids)
       },
       err => {
-        const errorMsg = err.error.detail || "Ошибка получения пользователей и рецензентов"
+        const errorMsg = err.error?.detail || "Ошибка получения пользователей и рецензентов"
         this.toastService.error(errorMsg);
       }
     )
@@ -117,7 +117,7 @@ export class EvaluatorsList {
         this.initialEvaluators.set(this.assessmentEvaluatorsId())
       },
       error: err => {
-        const errorMsg = err.error.detail || "Ошибка получения пользователей"
+        const errorMsg = err.error?.detail || "Ошибка получения пользователей"
         this.toastService.error(errorMsg);
       }
     })

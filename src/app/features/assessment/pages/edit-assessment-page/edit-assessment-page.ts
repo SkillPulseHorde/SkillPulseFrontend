@@ -87,7 +87,7 @@ export class EditAssessmentPage implements OnInit {
         this.selected.set(this.assessment()!.evaluateeInfo.id)
       },
       err => {
-        const errorMsg = err.error.detail || "Ошибка получения пользователей"
+        const errorMsg = err.error?.detail || "Ошибка получения пользователей"
         this.toastService.error(errorMsg);
       }
     )
@@ -152,7 +152,7 @@ export class EditAssessmentPage implements OnInit {
         this.router.navigate(["/manage-assessments"])
       },
       err => {
-        const errorMsg = err.error.detail || "Ошибка редактирования аттестации"
+        const errorMsg = err.error?.detail || "Ошибка редактирования аттестации"
         this.toastService.error(errorMsg)
       }
     )
