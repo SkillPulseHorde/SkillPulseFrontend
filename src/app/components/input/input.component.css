@@ -7,6 +7,12 @@ input {
   outline: none;
 }
 
+input:disabled {
+  border-color: #dfdfdf;
+  color: #bfbfbf;
+  background-color: white;
+}
+
 .search {
   border: none;
   padding: 12px 10px 12px 48px;

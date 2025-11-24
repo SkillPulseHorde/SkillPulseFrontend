@@ -13,6 +13,10 @@ export interface GetAssessmentsRequestProps {
   isActive: boolean;
 }
 
+export interface GetAssessmentRequestProps {
+  assessmentId: string;
+}
+
 export interface StartAssessmentRequestProps {
   evaluateeId: string;
   startAt: Date;
@@ -21,12 +25,23 @@ export interface StartAssessmentRequestProps {
   evaluatorIds: string[];
 }
 
-export interface Assessment {
+export interface UpdateAssessmentRequestProps {
+  assessmentId: string;
+  endsAt: Date;
+  evaluatorIds: string[];
+}
+
+interface Evaluatee {
   id: string;
-  evaluateeId: string;
-  evaluateeFullName: string;
-  evaluateePosition: Position;
-  evaluateeTeamName: string;
+  fullName: string;
+  position: Position;
+  teamName: string;
+}
+
+export interface Assessment {
+  assessmentId: string;
   startAt: Date;
   endsAt: Date;
+  evaluateeInfo: Evaluatee
+  evaluatorIds: string[];
 }

@@ -5,7 +5,7 @@ import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {AssessmentService} from '../../api/assessment.service';
 import {take} from 'rxjs';
 import {Assessment} from '../../store/assessment.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AssessmentComponent} from '../../components/assessment/assessment.component';
 import {ModalService} from '../../../../components/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
@@ -23,6 +23,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class ManageAssessmentsPage {
   assessmentService = inject(AssessmentService);
+  route = inject(ActivatedRoute);
   router = inject(Router);
   modalService = inject(ModalService);
   toastService = inject(ToastrService)
@@ -33,11 +34,14 @@ export class ManageAssessmentsPage {
 
   assessmentToDeleteId = signal<string>("")
 
-  toggleIsActive() {
-    this.isActive.set(!this.isActive())
+  toggleIsActive(tab: number) {
+    this.isActive.set(tab === 0)
   }
 
   constructor() {
+    const params = this.route.snapshot.queryParams
+    this.isActive.set(params['isActive'] !== "false");
+
     effect(() => {
       this.assessmentService.getAssessments({isActive: this.isActive()}).pipe(
         take(1)
@@ -46,7 +50,7 @@ export class ManageAssessmentsPage {
           this.assessments.set(assessments);
         },
         error: err => {
-          const errorMsg = err.error.detail || "Ошибка получения списка аттестаций"
+          const errorMsg = err.error?.detail || "Ошибка получения списка аттестаций"
           this.toastService.error(errorMsg)
         }
       })
@@ -58,7 +62,7 @@ export class ManageAssessmentsPage {
   }
 
   onEditAssessmentButtonClick(id: string) {
-    console.log("EDIT:", id)
+    this.router.navigate([`manage-assessments/edit`, id]);
   }
 
   onDeleteAssessmentButtonClick(id: string) {
@@ -71,13 +75,13 @@ export class ManageAssessmentsPage {
       take(1),
     ).subscribe({
       next: () => {
-        this.assessments.set(this.assessments().filter(assessment => assessment.id !== this.assessmentToDeleteId()))
+        this.assessments.set(this.assessments().filter(assessment => assessment.assessmentId !== this.assessmentToDeleteId()))
         this.assessmentToDeleteId.set("")
         this.toastService.success("Аттестация успешно удалена")
         this.modalService.close()
       },
       error: err => {
-        const errorMsg = err.error.detail || "Ошибка удаления аттестации"
+        const errorMsg = err.error?.detail || "Ошибка удаления аттестации"
         this.toastService.error(errorMsg)
       }
     })

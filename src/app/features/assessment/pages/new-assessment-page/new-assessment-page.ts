@@ -1,9 +1,9 @@
-import {Component, computed, inject, signal, viewChild} from '@angular/core';
+import {Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {FormControl} from '@angular/forms';
 import {EvaluatorsList} from '../../../user/components/evaluators-list/evaluators-list.component';
 import {Button} from '../../../../components/button/button.component';
-import {take, takeUntil} from 'rxjs';
+import {take} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {UserState} from '../../../user/store/user.reducers';
 import {UserService} from '../../../user/api/user.service';
@@ -15,7 +15,6 @@ import {SelectOption} from '../../../../components/select/select.model';
 import {AssessmentService} from '../../api/assessment.service';
 import {Router} from '@angular/router';
 import {Datepicker} from '../../../../components/datepicker/datepicker.component';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'new-assessment-page',
@@ -29,7 +28,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   templateUrl: './new-assessment-page.html',
   styleUrl: './new-assessment-page.css',
 })
-export class NewAssessmentPage {
+export class NewAssessmentPage implements OnInit {
   store = inject(Store<{ user: UserState }>)
   userService = inject(UserService)
   assessmentService = inject(AssessmentService);
@@ -101,7 +100,7 @@ export class NewAssessmentPage {
             this.filteredUsers.set(users)
           },
           err => {
-            const errorMsg = err.error.detail || "Ошибка получения пользователей"
+            const errorMsg = err.error?.detail || "Ошибка получения пользователей"
             this.toastService.error(errorMsg);
           }
         )
@@ -147,8 +146,6 @@ export class NewAssessmentPage {
   startAssessment() {
     if (!this.isFormValid()) return
 
-    this.evaluatorsList()?.updateEvaluatorsList()
-
     this.assessmentService.startAssessment({
       evaluateeId: this.selected(),
       startAt: new Date(this.startDate.value!),
@@ -163,7 +160,7 @@ export class NewAssessmentPage {
         this.router.navigate(["/manage-assessments"])
       },
       err => {
-        const errorMsg = err.error.detail || "Ошибка запуска аттестации"
+        const errorMsg = err.error?.detail || "Ошибка запуска аттестации"
 
         this.toastService.error(errorMsg)
       }
