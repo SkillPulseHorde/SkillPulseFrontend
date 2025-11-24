@@ -27,8 +27,10 @@
 
 .disabled {
   position: relative;
+  opacity: 0.5;
 }
 
+/*
 .disabled::after {
   content: '';
   position: absolute;
@@ -38,4 +40,4 @@
   height: 100%;
   background-color: rgba(217, 217, 217, 0.5);
   pointer-events: none;
-}
+}*/

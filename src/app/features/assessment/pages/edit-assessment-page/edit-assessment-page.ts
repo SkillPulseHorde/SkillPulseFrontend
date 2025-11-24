@@ -81,18 +81,18 @@ export class EditAssessmentPage implements OnInit {
   fetchUsers(userId: string) {
     this.userService.getUsers({userId, includeCurrentUser: true}).pipe(
       take(1),
-    ).subscribe(
-      users => {
+    ).subscribe({
+      next: users => {
         if (!this.assessment()) return
 
         this.users.set(users)
         this.selected.set(this.assessment()!.evaluateeInfo.id)
       },
-      err => {
+      error: err => {
         const errorMsg = err.error?.detail || "Ошибка получения пользователей"
         this.toastService.error(errorMsg);
       }
-    )
+    })
   }
 
   fetchAssessment() {
@@ -149,15 +149,20 @@ export class EditAssessmentPage implements OnInit {
       evaluatorIds: this.evaluatorsList()!.evaluators()
     }).pipe(
       take(1),
-    ).subscribe(
-      () => {
+    ).subscribe({
+      next: () => {
         this.toastService.success("Аттестация успешно отредактирована")
-        this.router.navigate(["/manage-assessments"])
+        this.router.navigate(["/manage-assessments"], {
+          queryParams: {
+            isActive: this.assessment()!.startAt.getDate() <= new Date().getDate()
+          },
+          queryParamsHandling: 'merge'
+        })
       },
-      err => {
+      error: err => {
         const errorMsg = err.error?.detail || "Ошибка редактирования аттестации"
         this.toastService.error(errorMsg)
       }
-    )
+    })
   }
 }
