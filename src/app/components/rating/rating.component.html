@@ -1,0 +1,8 @@
+<div class="rating">
+  @for (i of Array.from({length: max()}); let idx = $index; track idx) {
+    <icon [type]="hoverRating() >= idx+1 ? 'star-filled' : 'star'" [size]="24"
+          (click)="ratingChanged(idx+1)"
+          (mouseenter)="mouseEnter(idx+1)"
+          (mouseleave)="mouseLeave()"/>
+  }
+</div>

@@ -1,0 +1,15 @@
+<div class="competence" [ngClass]="{
+  'closed': !isOpen()
+}">
+  <div class="control" (click)="toggleOpen()">
+    <icon type="arrow" [size]="24"/>
+    <span>{{ label() }}</span>
+  </div>
+  <div class="content">
+    <ng-content/>
+    <div class="comment">
+      <label><icon type="message" [size]="24"/>Напишите краткий комментарий по владению сотрудником данной компетенцией</label>
+      <app-textarea placeholder="Комментарий" />
+    </div>
+  </div>
+</div>

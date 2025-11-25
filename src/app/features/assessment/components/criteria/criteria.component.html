@@ -1,0 +1,11 @@
+@let criteria = this.criteria();
+
+<div class="criteria">
+  <label [for]="criteria.id">{{criteria.name}}</label>
+  <rating [id]="criteria.id" [max]="10"/>
+  <app-textarea placeholder="Комментарий"/>
+  <div class="cannotEvaluate">
+    <checkbox/>
+    <span>Не могу оценить</span>
+  </div>
+</div>

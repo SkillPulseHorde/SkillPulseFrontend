@@ -1,0 +1,19 @@
+textarea {
+  font-size: 16px;
+  border: 1px solid #535353;
+  color: #535353;
+  padding: 12px 10px;
+  width: 100%;
+  outline: none;
+  resize: vertical;
+  min-height: 50px;
+}
+
+textarea:focus {
+  border-color: #C22918;
+}
+
+.ng-touched.ng-invalid {
+  border-color: #C22918;
+  color: #C22918;
+}

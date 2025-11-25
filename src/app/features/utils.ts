@@ -48,7 +48,7 @@ const baseMenu: MenuItemProps[] = [
     id: 3,
     srcIcon: 'star',
     title: "Оценивание",
-    path: "assessment"
+    path: "assessments"
   }
 ]
 

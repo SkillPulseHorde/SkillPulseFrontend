@@ -7,6 +7,7 @@ import {UserState} from '../../../user/store/user.reducers';
 import {take} from 'rxjs';
 import {Assessment} from '../../store/assessment.model';
 import {AssessmentComponent} from '../../components/assessment/assessment.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'assessments-list-page',
@@ -20,6 +21,7 @@ import {AssessmentComponent} from '../../components/assessment/assessment.compon
 export class AssessmentsListPage {
   assessmentService = inject(AssessmentService);
   toastService = inject(ToastrService);
+  router = inject(Router);
 
   assessments = signal<Assessment[]>([]);
 
@@ -41,7 +43,7 @@ export class AssessmentsListPage {
     });
   }
 
-  onAssessmentClicked(assessmentIs: string) {
-    console.log("Assessment Clicked: ", assessmentIs);
+  onAssessmentClicked(assessmentId: string) {
+    this.router.navigate(['/assessments', assessmentId]);
   }
 }

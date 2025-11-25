@@ -25,6 +25,18 @@ export interface StartAssessmentRequestProps {
   evaluatorIds: string[];
 }
 
+export interface DeleteAssessmentRequestProps {
+  assessmentId: string;
+}
+
+export interface GetAssessmentRequestProps {
+  assessmentId: string;
+}
+
+export interface GetCompetencesRequestProps {
+  evaluateeId: string;
+}
+
 interface Evaluatee {
   id: string;
   fullName: string;
@@ -38,4 +50,16 @@ export interface Assessment {
   endsAt: Date;
   evaluateeInfo: Evaluatee
   evaluatorIds: string[];
+}
+
+export interface Criteria {
+  id: string;
+  name: string;
+  isMandatory: boolean;
+}
+
+export interface Competence {
+  id: string;
+  name: string;
+  criteria: Criteria[]
 }
