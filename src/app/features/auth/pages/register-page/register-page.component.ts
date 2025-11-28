@@ -59,7 +59,7 @@ export class RegisterPage {
         this.router.navigate(['/auth/login']);
       },
       error: (err) => {
-        const errorMsg = err.error.detail || "Ошибка регистрации";
+        const errorMsg = err.error?.detail || "Ошибка регистрации";
         this.toastService.error(errorMsg);
         this.store.dispatch(registerFailure({error: errorMsg}))
       }

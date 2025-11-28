@@ -1,4 +1,4 @@
-import {Component, input, output} from '@angular/core';
+import {Component, input, OnDestroy, OnInit, output} from '@angular/core';
 import {Input} from '../input/input.component';
 import {FormControl} from '@angular/forms';
 import {Icon} from '../icon/icon.component';
@@ -13,7 +13,7 @@ import {debounceTime, Subscription} from 'rxjs';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit, OnDestroy {
 
   hint = input<string>();
 
