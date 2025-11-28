@@ -1,0 +1,27 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 64px 90px;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: 500;
+  color: #C22918;
+  height: 58px;
+}
+
+.subordinatesList {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 30px 100px;
+  height: 362px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.noSubordinates {
+  color: #535353;
+}

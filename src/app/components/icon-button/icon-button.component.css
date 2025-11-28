@@ -1,0 +1,17 @@
+button {
+  border-radius: 100%;
+  border: 1px solid #DFDFDF;
+  color: #c22918;
+  transition: all 0.3s ease-in-out;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  border-color: #c22918;
+  background-color: #c22918;
+  color: white;
+}

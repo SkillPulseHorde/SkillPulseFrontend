@@ -1,0 +1,22 @@
+<div class="page">
+  <div class="nav">
+    <icon-button [size]="60" icon="back" (buttonClick)="onBackButtonClick()"/>
+    <span>Назад к списку</span>
+  </div>
+  <div class="profile">
+    <avatar [size]="120"/>
+    <div class="info">
+      <h3>{{ getFullName(user()) }}</h3>
+      <h4>Грейд {{ user()?.grade }}</h4>
+      <span>{{ getPositionString(user()?.position) }}</span>
+      <span>Команда {{ user()?.teamName }}</span>
+      <div class="email">
+        <icon type="email" [size]="24"/>
+        <span>{{ user()?.email }}</span>
+      </div>
+    </div>
+  </div>
+  @if (user()) {
+    <evaluators-list [userId]="user()!.userId"/>
+  }
+</div>

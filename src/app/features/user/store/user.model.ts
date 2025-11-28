@@ -34,3 +34,19 @@ export interface GetUsersRequestProps {
   userId: string;
   includeCurrentUser: boolean;
 }
+
+export interface GetSubordinates {
+  userId: string;
+}
+
+export interface Subordinate {
+  id: string;
+  firstName: string,
+  lastName: string,
+  midName: string,
+  email: string,
+  grade: Grade,
+  teamName: string,
+  managerName: string,
+  position: Position
+}

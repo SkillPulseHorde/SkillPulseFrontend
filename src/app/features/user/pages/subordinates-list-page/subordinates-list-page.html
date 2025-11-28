@@ -1,0 +1,13 @@
+<div class="page">
+  <h1 class="pageTitle">{{ title() }}</h1>
+  <app-fieldset title="Выберите сотрудника">
+    <div class="subordinatesList">
+      @for (subordinate of filteredSubordinates(); track subordinate.id) {
+        <subordinates-list-item [subordinate]="subordinate"/>
+      }
+      @if (filteredSubordinates().length === 0) {
+        <span class="noSubordinates">Сотрудники не найдены</span>
+      }
+    </div>
+  </app-fieldset>
+</div>

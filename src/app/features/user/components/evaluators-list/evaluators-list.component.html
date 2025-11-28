@@ -8,6 +8,9 @@
                            'checked': evaluators().includes(user.id)
                            }"/>
     }
+    @if (filteredUsers().length === 0) {
+      <span class="noEvaluators">Сотрудники не найдены</span>
+    }
   </div>
   <div class="controlSection">
     <span>Выбрано: {{ evaluators().length }}</span>

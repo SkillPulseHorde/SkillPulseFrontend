@@ -1,0 +1,26 @@
+<div class="wrapper">
+  <div class="subordinatesListItem" (click)="openMenu($event)" (contextmenu)="openMenu($event)">
+    <avatar [size]="56" />
+    <div class="info">
+      <span class="name">{{getFullName(subordinate())}}</span>
+      <span class="position">{{getPositionString(subordinate().position)}}</span>
+      <span class="team">{{subordinate().teamName}}</span>
+    </div>
+  </div>
+  @if (isMenuOpen()) {
+    <div
+      class="popupMenu"
+      [style.left]="menuPosition().x"
+      [style.top]="menuPosition().y"
+      (click)="$event.stopPropagation()">
+      <button class="menuItem">
+        <icon [size]="24" type="pulse"/>
+        <span>Результаты</span>
+      </button>
+      <button class="menuItem" (click)="onProfileButtonClick()">
+        <icon [size]="24" type="check-big"/>
+        <span>Назначить рецензентов</span>
+      </button>
+    </div>
+  }
+</div>
