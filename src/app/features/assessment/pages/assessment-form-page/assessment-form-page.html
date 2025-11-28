@@ -1,9 +1,11 @@
+@let competencesFA = this.getCompetences();
+
 <div class="page">
   <div class="nav">
-    <icon-button [size]="60" icon="back" (buttonClick)="onBackButtonClick()" />
+    <icon-button [size]="60" icon="back" (buttonClick)="onBackButtonClick()"/>
     <span>Назад к списку</span>
   </div>
-  <h1 class="title">Оценка: {{assessment()!.evaluateeInfo.fullName}}</h1>
+  <h1 class="title">Оценка: {{ assessment()!.evaluateeInfo.fullName }}</h1>
   <span class="description">
     В поле ответа введите балл от 1 до 10.<br/>
     Если ставите оценку 1 или 10, то подкрепите оценку аргументом, комментарием или реальным кейсом из совместной работы.<br/>
@@ -18,11 +20,36 @@
     <br/>
     Если у тебя нет конкретных кейсов и ты не знаешь, как оценить сотрудника, то НЕ нужно ставить звездочку, отмечай в чекбоксе.
   </span>
-  @for (competence of competences(); let idx = $index; track competence.id) {
-    <competence label="{{competence.name}}" [openByDefault]="idx === 0">
-      @for (criteria of competence.criteria; track criteria.id) {
-        <criteria [criteria]="criteria" />
+  @if (unevaluatedMandatoryCompetences().length > 0) {
+    <div class="warning" id="warning">
+      <icon [size]="20" type="warning"/>
+      <div class="content">
+        <span class="warningTitle">Внимание!</span>
+        <span class="warningDescription">
+        Следующие обязательные пункты должны быть оценены по шкале от 1 до 10. <br/>
+        Если эти пункты не будут оценены, компетенция не будет засчитана при подведении итогов аттестации:
+          <ul class="unevaluatedCriteriaList">
+            @for (competence of unevaluatedMandatoryCriteria().keys(); track competence) {
+              <li>{{ competence }}</li>
+              <ul>
+              @for (criteria of unevaluatedMandatoryCriteria().get(competence); track criteria) {
+                <li>{{ criteria }}</li>
+              }
+              </ul>
+            }
+          </ul>
+      </span>
+      </div>
+    </div>
+  }
+  @for (competence of competences(); let competenceIndex = $index; track competence.id) {
+    <competence [control]="competencesFA.at(competenceIndex).controls.comment" label="{{competence.name}}"
+                [openByDefault]="competenceIndex === 0">
+      @for (criteria of competence.criteria; let criteriaIndex = $index; track criteria.id) {
+        <criteria [control]="competencesFA.at(competenceIndex).controls.criteria.at(criteriaIndex)"
+                  [criteria]="criteria"/>
       }
     </competence>
   }
+  <app-button label="Отправить оценку" (buttonClick)="onEvaluateButtonClick()"/>
 </div>

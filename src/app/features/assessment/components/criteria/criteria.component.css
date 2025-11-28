@@ -12,7 +12,7 @@
     position: relative;
   }
 
-  label:after {
+  .mandatory:after {
     position: absolute;
     right: -16px;
     font-size: 24px;
@@ -24,6 +24,7 @@
 .cannotEvaluate {
   display: flex;
   gap: 4px;
+  cursor: pointer;
 
   span {
     font-weight: 300;

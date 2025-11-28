@@ -37,6 +37,24 @@ export interface GetCompetencesRequestProps {
   evaluateeId: string;
 }
 
+export interface EvaluateRequestProps {
+  assessmentId: string;
+  evaluatorId: string;
+  competenceEvaluations: CompetenceEvaluation[];
+}
+
+export interface CompetenceEvaluation {
+  competenceId: string;
+  criterionEvaluations: CriterionEvaluation[] | null
+  competenceComment: string | null
+}
+
+export interface CriterionEvaluation {
+  criterionId: string;
+  score: number | null;
+  criterionComment: string;
+}
+
 interface Evaluatee {
   id: string;
   fullName: string;

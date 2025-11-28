@@ -12,5 +12,5 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 })
 export class Textarea {
   placeholder = input("")
-  control = input<FormControl>()
+  control = input.required<FormControl>()
 }

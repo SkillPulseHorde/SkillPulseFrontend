@@ -5,7 +5,7 @@ import {environment} from '../../../../environments/environment';
 import {
   Assessment,
   Competence,
-  DeleteAssessmentRequestProps,
+  DeleteAssessmentRequestProps, EvaluateRequestProps,
   GetActiveAssessmentsByEvaluatorRequestProps,
   GetAssessmentRequestProps,
   GetAssessmentsRequestProps,
@@ -74,5 +74,9 @@ export class AssessmentService {
 
   getCompetences({evaluateeId}: GetCompetencesRequestProps) {
     return this.http.get<Competence[]>(`${environment.apiGatewayUrl}/api/assessments/competences/${evaluateeId}`)
+  }
+
+  evaluate(data: EvaluateRequestProps) {
+    return this.http.post(`${environment.apiGatewayUrl}/api/assessments/evaluations`, data)
   }
 }

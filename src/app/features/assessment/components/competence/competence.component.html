@@ -9,7 +9,7 @@
     <ng-content/>
     <div class="comment">
       <label><icon type="message" [size]="24"/>Напишите краткий комментарий по владению сотрудником данной компетенцией</label>
-      <app-textarea placeholder="Комментарий" />
+      <app-textarea [control]="control()" placeholder="Комментарий" />
     </div>
   </div>
 </div>
