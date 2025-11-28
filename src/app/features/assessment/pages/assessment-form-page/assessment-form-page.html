@@ -5,7 +5,7 @@
     <icon-button [size]="60" icon="back" (buttonClick)="onBackButtonClick()"/>
     <span>Назад к списку</span>
   </div>
-  <h1 class="title">Оценка: {{ assessment()!.evaluateeInfo.fullName }}</h1>
+  <h1 class="title">Оценка: {{ assessment()?.evaluateeInfo?.fullName }}</h1>
   <span class="description">
     В поле ответа введите балл от 1 до 10.<br/>
     Если ставите оценку 1 или 10, то подкрепите оценку аргументом, комментарием или реальным кейсом из совместной работы.<br/>

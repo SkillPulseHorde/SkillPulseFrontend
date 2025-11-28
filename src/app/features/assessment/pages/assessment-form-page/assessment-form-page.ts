@@ -226,13 +226,17 @@ export class AssessmentFormPage implements OnInit {
 
     if (unevaluatedCriteria.length > 0) {
       this.isSecondAttemptToEvaluate.set(false)
+      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>)
       this.toastService.error("Все критерии должны быть оценены или отмечены флагом \"Не могу оценить\"")
+      this.viewportScroller.scrollToPosition([0, 0], {behavior: 'smooth'})
       return
     }
 
     if (emptyComment.length > 0) {
       this.isSecondAttemptToEvaluate.set(false)
+      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>)
       this.toastService.error("Не заполнены обязательные поля комментариев")
+      this.viewportScroller.scrollToPosition([0, 0], {behavior: 'smooth'})
       return
     }
 
