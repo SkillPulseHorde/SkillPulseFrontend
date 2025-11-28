@@ -174,8 +174,6 @@ export class AssessmentFormPage implements OnInit {
       competenceEvaluations.push(competence)
     }
 
-    console.log(competenceEvaluations)
-
     this.assessmentService.evaluate({
       assessmentId: this.assessment()?.assessmentId!,
       evaluatorId: this.userId(),
@@ -220,10 +218,6 @@ export class AssessmentFormPage implements OnInit {
       }
     }
 
-    console.log("Неоценённые критерии: ", unevaluatedCriteria.length)
-    console.log("Обязательные комменты: ", emptyComment.length)
-    console.log("Неоценённые обязательные критерии: ", [...unevaluatedMandatory.entries()].length)
-
     if (unevaluatedCriteria.length > 0) {
       this.isSecondAttemptToEvaluate.set(false)
       this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>)
@@ -247,7 +241,6 @@ export class AssessmentFormPage implements OnInit {
       return
     }
 
-    console.log("Отправляем оценку")
     this.evaluate()
   }
 
