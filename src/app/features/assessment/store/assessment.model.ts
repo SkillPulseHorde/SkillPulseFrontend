@@ -25,6 +25,12 @@ export interface StartAssessmentRequestProps {
   evaluatorIds: string[];
 }
 
+export interface UpdateAssessmentRequestProps {
+  assessmentId: string;
+  endsAt: Date;
+  evaluatorIds: string[];
+}
+
 export interface DeleteAssessmentRequestProps {
   assessmentId: string;
 }

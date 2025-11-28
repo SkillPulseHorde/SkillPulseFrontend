@@ -50,3 +50,8 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: auto;
   cursor: pointer;
 }
+
+/* Курсор по умолчанию внутри .disabled */
+.disabled * {
+  cursor: default;
+}

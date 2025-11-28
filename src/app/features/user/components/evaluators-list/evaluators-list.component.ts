@@ -31,6 +31,9 @@ export class EvaluatorsList {
   store = inject(Store<{ user: UserState }>)
 
   userId = input.required<string>();
+  assessmentEvaluatorsId = input<string[]>([]);
+  disabled = input<boolean>(false);
+
   title = input<string>('Выберите рецензентов')
   isEditable = input<boolean>(true);
 
@@ -58,6 +61,8 @@ export class EvaluatorsList {
   }
 
   toggleEvaluator(userId: string) {
+    if (this.disabled()) return
+
     if (this.evaluators().includes(userId)) {
       this.evaluators.set(this.evaluators().filter(id => id !== userId));
     } else {
@@ -71,10 +76,10 @@ export class EvaluatorsList {
     ).subscribe({
       next: () => {
         this.initialEvaluators.set(this.evaluators())
-        this.toastService.success("Список рецензентов успешно обновлён!");
+        this.toastService.success("Список рецензентов успешно сохранён. HR-менеджер будет учитывать ваши пожелания");
       },
       error: (err) => {
-        const errorMsg = err.error.detail || "Ошибка обновления списка рецензентов";
+        const errorMsg = err.error?.detail || "Ошибка обновления списка рецензентов";
         this.toastService.error(errorMsg);
       }
     })
@@ -92,15 +97,40 @@ export class EvaluatorsList {
         this.initialEvaluators.set(ids)
       },
       err => {
-        const errorMsg = err.error.detail || "Ошибка получения пользователей и рецензентов"
+        const errorMsg = err.error?.detail || "Ошибка получения пользователей и рецензентов"
         this.toastService.error(errorMsg);
       }
     )
   }
 
+  fetchUsers() {
+    this.userService.getUsers({
+      userId: this.userId(),
+      includeCurrentUser: false
+    }).pipe(
+      take(1)
+    ).subscribe({
+      next: (users) => {
+        this.users.set(users)
+        this.filteredUsers.set(users)
+        this.evaluators.set(this.assessmentEvaluatorsId())
+        this.initialEvaluators.set(this.assessmentEvaluatorsId())
+      },
+      error: err => {
+        const errorMsg = err.error?.detail || "Ошибка получения пользователей"
+        this.toastService.error(errorMsg);
+      }
+    })
+  }
+
   constructor() {
     effect(() => {
       if (!this.userId()) return
+
+      if (this.assessmentEvaluatorsId().length !== 0) {
+        this.fetchUsers()
+        return;
+      }
 
       untracked(() => this.fetchEvaluators())
     });

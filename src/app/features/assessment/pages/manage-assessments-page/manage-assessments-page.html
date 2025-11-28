@@ -2,8 +2,8 @@
   <h1 class="pageTitle">Управление аттестациями</h1>
   <div class="navbar">
     <div class="tabs">
-      <tab [id]="0" title="Активные" [isActive]="isActive()" (onClick)="toggleIsActive()"/>
-      <tab [id]="1" title="Предстоящие" [isActive]="!isActive()" (onClick)="toggleIsActive()"/>
+      <tab [id]="0" title="Активные" [isActive]="isActive()" (onClick)="toggleIsActive(0)"/>
+      <tab [id]="1" title="Предстоящие" [isActive]="!isActive()" (onClick)="toggleIsActive(1)"/>
     </div>
     <app-button label="Запуск новой аттестации" (buttonClick)="onNewAssessmentButtonClick()"/>
   </div>

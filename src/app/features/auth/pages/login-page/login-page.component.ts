@@ -67,7 +67,7 @@ export class LoginPage {
         this.router.navigate(['/profile'])
       },
       error: err => {
-        const errorMsg = err.error.detail ?? "Ошибка авторизации"
+        const errorMsg = err.error?.detail ?? "Ошибка авторизации"
         this.toastService.error(errorMsg);
         this.store.dispatch(loginFailure({error: errorMsg}));
       }
