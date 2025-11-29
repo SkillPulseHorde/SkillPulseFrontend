@@ -1,4 +1,4 @@
-import {Position, Evaluator, User} from './user/store/user.model';
+import {Position, Evaluator, User, Subordinate} from './user/store/user.model';
 import {MenuItemProps} from '../layout/main-layout/main-layout.model';
 
 const TOKENS_EXPIRATION_HOURS = 6
@@ -7,14 +7,14 @@ export const getExpirationTime = () => {
   return new Date(new Date().getTime() + TOKENS_EXPIRATION_HOURS * 3600 * 1000);
 }
 
-export const getFullNameWithInitials = (user: User | Evaluator | null) => {
+export const getFullNameWithInitials = (user: User | Evaluator | Subordinate | null) => {
   if (user) {
     return `${user.lastName} ${user.firstName.slice(0, 1)}.${user.midName ? user.midName.slice(0, 1) + "." : ""}`;
   }
   return '';
 }
 
-export const getFullName = (user: User | Evaluator | null) => {
+export const getFullName = (user: User | Evaluator | Subordinate | null) => {
   if (user) {
     return `${user.lastName} ${user.firstName}${user.midName ? " " + user.midName : ""}`;
   }

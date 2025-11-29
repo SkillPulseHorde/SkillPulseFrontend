@@ -10,6 +10,8 @@ import {NewAssessmentPage} from './features/assessment/pages/new-assessment-page
 import {AssessmentsListPage} from './features/assessment/pages/assessments-list-page/assessments-list-page';
 import {AssessmentFormPage} from './features/assessment/pages/assessment-form-page/assessment-form-page';
 import {EditAssessmentPage} from './features/assessment/pages/edit-assessment-page/edit-assessment-page';
+import {SubordinateProfilePage} from './features/user/pages/subordinate-profile-page/subordinate-profile-page';
+import {SubordinatesListPage} from './features/user/pages/subordinates-list-page/subordinates-list-page';
 
 export const routes: Routes = [
   {
@@ -65,7 +67,23 @@ export const routes: Routes = [
       {
         path: 'manage-assessments/edit/:id',
         component: EditAssessmentPage
-      }
+      },
+      {
+        path: 'my-team',
+        component: SubordinatesListPage
+      },
+      {
+        path: 'my-team/:id',
+        component: SubordinateProfilePage
+      },
+      {
+        path: 'employees',
+        component: SubordinatesListPage
+      },
+      {
+        path: 'employees/:id',
+        component: SubordinateProfilePage
+      },
     ]
   },
   {

@@ -20,17 +20,33 @@ export interface GetUserRequestProps {
 }
 
 export interface GetUserResponse {
-  firstName: string,
-  lastName: string,
-  midName: string,
-  email: string,
-  grade: Grade,
-  teamName: string,
-  managerId: string,
-  position: Position
+  firstName: string;
+  lastName: string;
+  midName: string;
+  email: string;
+  grade: Grade;
+  teamName: string;
+  managerId: string;
+  position: Position;
 }
 
 export interface GetUsersRequestProps {
   userId: string;
   includeCurrentUser: boolean;
+}
+
+export interface GetSubordinatesRequestProps {
+  userId: string;
+}
+
+export interface Subordinate {
+  id: string;
+  firstName: string;
+  lastName: string;
+  midName: string;
+  email: string;
+  grade: Grade;
+  teamName: string;
+  managerName: string;
+  position: Position;
 }

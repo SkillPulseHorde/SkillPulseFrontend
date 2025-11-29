@@ -1,0 +1,15 @@
+<div class="page">
+  <h1 class="pageTitle">{{ title() }}</h1>
+  <app-fieldset title="Выберите сотрудника">
+    <app-search hint="Найдите коллег, чей профиль или результаты вы хотите посмотреть. Можно искать по ФИО"
+                (onQueryChanged)="searchSubordinates($event)"/>
+    <div class="subordinatesList">
+      @for (subordinate of filteredSubordinates(); track subordinate.id) {
+        <subordinates-list-item [subordinate]="subordinate"/>
+      }
+      @if (filteredSubordinates().length === 0) {
+        <span class="noSubordinates">Сотрудники не найдены</span>
+      }
+    </div>
+  </app-fieldset>
+</div>

@@ -1,0 +1,74 @@
+.wrapper {
+  position: relative;
+}
+
+.subordinatesListItem {
+  width: 400px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+  padding: 8px 0 8px 8px;
+}
+
+.subordinatesListItem:hover {
+  background-color: #D9D9D9;
+}
+
+avatar {
+  margin-right: 20px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20px - 56px);
+}
+
+span {
+  color: #989898;
+  font-size: 14px;
+}
+
+.name {
+  font-weight: 500;
+  color: #1B1E25;
+  font-size: 16px;
+}
+
+.popupMenu {
+  position: absolute;
+  background-color: #F1F1F6;
+  border: 1px solid #DFDFDF;
+  width: 220px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+
+.menuItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 8px;
+  border: none;
+  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+
+  icon {
+    color: #c22918;
+  }
+
+  span {
+    color: #535353;
+  }
+}
+
+.menuItem:hover {
+  background-color: #D9D9D9;
+  cursor: pointer;
+}

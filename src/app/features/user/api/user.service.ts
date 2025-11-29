@@ -2,7 +2,12 @@ import {Injectable, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
-import {GetUserRequestProps, GetUserResponse, GetUsersRequestProps, Evaluator} from '../store/user.model';
+import {
+  GetUserRequestProps,
+  GetUserResponse,
+  GetUsersRequestProps,
+  Evaluator, Subordinate, GetSubordinatesRequestProps
+} from '../store/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +20,10 @@ export class UserService {
   }
 
   getUsers({userId, includeCurrentUser}: GetUsersRequestProps): Observable<Evaluator[]> {
-    return this.http.get<Evaluator[]>(`${environment.apiGatewayUrl}/api/users?currentUserId=${userId}&includeCurrentUser=${includeCurrentUser}`);
+    return this.http.get<Evaluator[]>(`${environment.apiGatewayUrl}/api/users?currentUserId=${userId}&includeCurrentUser=${includeCurrentUser}`)
+  }
+
+  getSubordinates({userId}: GetSubordinatesRequestProps): Observable<Subordinate[]> {
+    return this.http.get<Subordinate[]>(`${environment.apiGatewayUrl}/api/users/${userId}/subordinates`)
   }
 }

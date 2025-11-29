@@ -23,3 +23,7 @@ evaluators-list-item.checked {
   align-items: center;
   align-self: flex-end;
 }
+
+.noEvaluators {
+  color: #535353;
+}
