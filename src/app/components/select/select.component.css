@@ -64,6 +64,7 @@
 .option {
   padding: 10px 16px;
   color: #535353;
+  transition: all 0.3s ease-in-out;
 }
 
 .option:hover {

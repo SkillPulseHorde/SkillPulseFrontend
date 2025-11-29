@@ -1,0 +1,32 @@
+.criteria {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #1B1E25;
+    width: max-content;
+    position: relative;
+  }
+
+  .mandatory:after {
+    position: absolute;
+    right: -16px;
+    font-size: 24px;
+    content: " *";
+    color: #c22918;
+  }
+}
+
+.cannotEvaluate {
+  display: flex;
+  gap: 4px;
+  cursor: pointer;
+
+  span {
+    font-weight: 300;
+  }
+}

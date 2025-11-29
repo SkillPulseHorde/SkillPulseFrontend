@@ -1,0 +1,16 @@
+@let criteria = this.criteria();
+@let criteriaControl = this.control();
+
+<div class="criteria">
+  <label [for]="criteria.id" [ngClass]="{
+  'mandatory': criteria.isMandatory
+}">{{ criteria.name }}</label>
+  @if (!criteriaControl.controls.cannotEvaluate.value) {
+    <rating [control]="criteriaControl.controls.rating" [id]="criteria.id" [max]="10"/>
+  }
+  <app-textarea [control]="criteriaControl.controls.comment" placeholder="Комментарий"/>
+  <div class="cannotEvaluate" (click)="checkedChange()">
+    <checkbox [checked]="criteriaControl.controls.cannotEvaluate.value ?? false"/>
+    <span>Не могу оценить</span>
+  </div>
+</div>

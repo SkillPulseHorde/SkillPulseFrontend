@@ -71,7 +71,7 @@ export class ManageAssessmentsPage {
   }
 
   deleteAssessment() {
-    this.assessmentService.deleteAssessment(this.assessmentToDeleteId()).pipe(
+    this.assessmentService.deleteAssessment({assessmentId: this.assessmentToDeleteId()}).pipe(
       take(1),
     ).subscribe({
       next: () => {

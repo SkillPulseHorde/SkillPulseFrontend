@@ -1,0 +1,55 @@
+@let competencesFA = this.getCompetences();
+
+<div class="page">
+  <div class="nav">
+    <icon-button [size]="60" icon="back" (buttonClick)="onBackButtonClick()"/>
+    <span>Назад к списку</span>
+  </div>
+  <h1 class="title">Оценка: {{ assessment()?.evaluateeInfo?.fullName }}</h1>
+  <span class="description">
+    В поле ответа введите балл от 1 до 10.<br/>
+    Если ставите оценку 1-2 или 9-10, то подкрепите оценку аргументом, комментарием или реальным кейсом из совместной работы.<br/>
+    Если ставите оценку от 3 до 8, то комментарий писать необязательно. Писать комментарий необходимо в том же поле, где ставится балл.<br/>
+    <br/>
+    Расшифровка оценок:<br/>
+    1 и 2 балла - навык очень низкий, практически отсутствует, имеются реальные кейсы, которые подтверждают отсутствие данной компетенции.<br/>
+    3 и 4 балла - навык можно определить, как точку роста. Он не отсутствует полностью, его достаточно для выполнения элементарных задач, но требует развития.<br/>
+    5 и 6 баллов - навык развит на среднем и достаточном уровне. Сотрудник применяет его в своей работе регулярно.<br/>
+    7 и 8 баллов - навык развит хорошо, уверенное владение компетенцией. Требует только поддержания уровня.<br/>
+    9 и 10 баллов - очень высокий уровень владения компетенцией. Про сотрудника можно сказать, что он мастер в этой сфере и может научить других данному умению.<br/>
+    <br/>
+    Если у тебя нет конкретных кейсов и ты не знаешь, как оценить сотрудника, то НЕ нужно ставить звездочку, отмечай в чекбоксе.
+  </span>
+  @if (unevaluatedMandatoryCompetences().length > 0) {
+    <div class="warning">
+      <icon [size]="20" type="warning"/>
+      <div class="content">
+        <span class="warningTitle">Внимание!</span>
+        <span class="warningDescription">
+        Следующие обязательные пункты должны быть оценены по шкале от 1 до 10. <br/>
+        Если эти пункты не будут оценены, компетенция не будет засчитана при подведении итогов аттестации:
+          <ul class="unevaluatedCriteriaList">
+            @for (entry of unevaluatedMandatoryCriteria().entries(); track entry[0]) {
+              <li>{{ entry[0] }}</li>
+              <ul>
+              @for (criteria of entry[1]; track criteria) {
+                <li>{{ criteria }}</li>
+              }
+              </ul>
+            }
+          </ul>
+      </span>
+      </div>
+    </div>
+  }
+  @for (competence of competences(); let competenceIndex = $index; track competence.id) {
+    <competence [control]="competencesFA.at(competenceIndex).controls.comment" label="{{competence.name}}"
+                [openByDefault]="competenceIndex === 0">
+      @for (criteria of competence.criteria; let criteriaIndex = $index; track criteria.id) {
+        <criteria [control]="competencesFA.at(competenceIndex).controls.criteria.at(criteriaIndex)"
+                  [criteria]="criteria"/>
+      }
+    </competence>
+  }
+  <app-button label="Отправить оценку" (buttonClick)="onEvaluateButtonClick()"/>
+</div>

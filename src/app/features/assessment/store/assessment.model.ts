@@ -13,8 +13,8 @@ export interface GetAssessmentsRequestProps {
   isActive: boolean;
 }
 
-export interface GetAssessmentRequestProps {
-  assessmentId: string;
+export interface GetActiveAssessmentsByEvaluatorRequestProps {
+  userId: string;
 }
 
 export interface StartAssessmentRequestProps {
@@ -31,6 +31,36 @@ export interface UpdateAssessmentRequestProps {
   evaluatorIds: string[];
 }
 
+export interface DeleteAssessmentRequestProps {
+  assessmentId: string;
+}
+
+export interface GetAssessmentRequestProps {
+  assessmentId: string;
+}
+
+export interface GetCompetencesRequestProps {
+  evaluateeId: string;
+}
+
+export interface EvaluateRequestProps {
+  assessmentId: string;
+  evaluatorId: string;
+  competenceEvaluations: CompetenceEvaluation[];
+}
+
+export interface CompetenceEvaluation {
+  competenceId: string;
+  criterionEvaluations: CriterionEvaluation[] | null;
+  competenceComment: string | null;
+}
+
+export interface CriterionEvaluation {
+  criterionId: string;
+  score: number | null;
+  criterionComment: string | null;
+}
+
 interface Evaluatee {
   id: string;
   fullName: string;
@@ -42,6 +72,18 @@ export interface Assessment {
   assessmentId: string;
   startAt: Date;
   endsAt: Date;
-  evaluateeInfo: Evaluatee
+  evaluateeInfo: Evaluatee;
   evaluatorIds: string[];
+}
+
+export interface Criteria {
+  id: string;
+  name: string;
+  isMandatory: boolean;
+}
+
+export interface Competence {
+  id: string;
+  name: string;
+  criteria: Criteria[];
 }

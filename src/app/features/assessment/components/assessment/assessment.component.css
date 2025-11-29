@@ -1,15 +1,26 @@
 .assessmentListItem {
   width: 700px;
-  height: 68px;
+  height: 84px;
   display: flex;
   align-items: center;
   gap: 20px;
+  padding: 8px 0 8px 24px;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+}
+
+.clickable:hover {
+  background-color: #D9D9D9;
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 445px);
+  flex: 1;
 }
 
 span {
@@ -25,8 +36,14 @@ span {
 
 .deadlines {
   color: #1B1E25;
-  padding: 0 34px;
-  width: 245px;
+  padding: 0 24px;
+  width: 225px;
+  line-height: 16px;
+}
+
+.deadlines.column {
+  width: 135px;
+  text-align: center;
 }
 
 icon {
