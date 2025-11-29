@@ -46,6 +46,10 @@ export class SubordinateProfilePage implements OnInit {
     this.prevPath.set(this.getPrevPathFromUrl(this.router.url));
 
     const userId = this.activatedRoute.snapshot.params['id']
+    if (!userId) {
+      this.router.navigate([this.prevPath()]);
+      return;
+    }
 
     this.userService.getUserById({userId}).pipe(
       take(1),

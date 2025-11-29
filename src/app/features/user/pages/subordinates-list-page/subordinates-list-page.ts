@@ -89,7 +89,7 @@ export class SubordinatesListPage implements OnInit {
     })
   }
 
-  searchEvaluators(query: string | null) {
+  searchSubordinates(query: string | null) {
     if (!query) {
       this.filteredSubordinates.set(this.subordinates())
       return
