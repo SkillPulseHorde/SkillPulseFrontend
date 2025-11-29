@@ -8,12 +8,14 @@ import {Evaluator, Subordinate} from '../../store/user.model';
 import {ToastrService} from 'ngx-toastr';
 import {Fieldset} from '../../../../components/fieldset/fieldset.component';
 import {SubordinatesListItem} from '../../components/subordinates-list-item/subordinates-list-item.component';
+import {SearchComponent} from "../../../../components/search/search.component";
 
 @Component({
   selector: 'subordinates-list-page',
   imports: [
     Fieldset,
     SubordinatesListItem,
+    SearchComponent,
   ],
   templateUrl: './subordinates-list-page.html',
   styleUrl: './subordinates-list-page.css',
@@ -85,5 +87,20 @@ export class SubordinatesListPage implements OnInit {
         this.toastService.error(errorMsg);
       }
     })
+  }
+
+  searchEvaluators(query: string | null) {
+    if (!query) {
+      this.filteredSubordinates.set(this.subordinates())
+      return
+    }
+
+    this.filteredSubordinates.set(this.subordinates().filter(subordinate => {
+        const q = query.toLowerCase()
+        return subordinate.lastName?.toLowerCase().startsWith(q) ||
+          subordinate.firstName?.toLowerCase().startsWith(q) ||
+          subordinate.midName?.toLowerCase().startsWith(q)
+      }
+    ))
   }
 }

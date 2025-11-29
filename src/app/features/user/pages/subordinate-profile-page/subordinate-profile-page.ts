@@ -30,19 +30,20 @@ export class SubordinateProfilePage implements OnInit {
   prevPath = signal("")
   user = signal<User | null>(null)
 
-  ngOnInit() {
-    const origin = this.router.url.split('/')[1]
-
+  private getPrevPathFromUrl(url: string): string {
+    const origin = url.split('/')[1];
     switch (origin) {
-      case 'my-team': {
-        this.prevPath.set("/my-team")
-        break
-      }
-      case 'employees': {
-        this.prevPath.set("/employees")
-        break
-      }
+      case 'my-team':
+        return '/my-team';
+      case 'employees':
+        return '/employees';
+      default:
+        return '/';
     }
+  }
+
+  ngOnInit() {
+    this.prevPath.set(this.getPrevPathFromUrl(this.router.url));
 
     const userId = this.activatedRoute.snapshot.params['id']
 
