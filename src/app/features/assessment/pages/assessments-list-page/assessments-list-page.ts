@@ -29,14 +29,14 @@ export class AssessmentsListPage {
     this.store.select((state) => state.user.user?.userId).pipe(
       take(1),
     ).subscribe(userId => {
-      if (!userId) return
+      if (!userId) return;
 
       this.assessmentService.getActiveAssessmentsByEvaluator({userId}).subscribe({
         next: assessments => {
           this.assessments.set(assessments)
         },
         error: err => {
-          const errorMsg = err.error.detail || "Ошибка получения назначенных аттестаций"
+          const errorMsg = err.error?.detail || "Ошибка получения назначенных аттестаций"
           this.toastService.error(errorMsg)
         }
       })

@@ -18,8 +18,9 @@ export function criteriaCommentRequiredValidator(): ValidatorFn {
     }
 
     if (formGroup.get('comment')?.errors?.['commentRequired']) {
-      delete formGroup.get('comment')?.errors?.['commentRequired'];
-      formGroup.get('comment')?.setErrors(Object.keys(formGroup.get('comment')!.errors!).length ? formGroup.get('comment')!.errors : null);
+      const { commentRequired, ...otherErrors } = formGroup.get('comment')!.errors!;
+
+      formGroup.get('comment')?.setErrors(Object.keys(otherErrors).length ? otherErrors : null);
     }
 
     return null;
@@ -32,7 +33,7 @@ export function criteriaRatingOrCannotEvaluateValidator(): ValidatorFn {
     const cannotEvaluate = formGroup.get('cannotEvaluate')?.value;
     const rating = formGroup.get('rating')?.value;
 
-    const isValid = cannotEvaluate || (rating >= 1 && rating <= 10);
+    const isValid = cannotEvaluate || (rating !== null && rating >= 1 && rating <= 10);
 
     if (!isValid) {
       return {ratingOrCannotEvaluateRequired: true};
@@ -50,7 +51,7 @@ export function mandatoryCriteria(isMandatory: boolean): ValidatorFn {
       return null;
     }
 
-    const isValid = rating >= 1 && rating <= 10
+    const isValid = rating !== null && rating >= 1 && rating <= 10;
 
     if (!isValid) {
       return {mandatoryCriteria: true};

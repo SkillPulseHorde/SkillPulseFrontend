@@ -51,14 +51,14 @@ export interface EvaluateRequestProps {
 
 export interface CompetenceEvaluation {
   competenceId: string;
-  criterionEvaluations: CriterionEvaluation[] | null
-  competenceComment: string | null
+  criterionEvaluations: CriterionEvaluation[] | null;
+  competenceComment: string | null;
 }
 
 export interface CriterionEvaluation {
   criterionId: string;
   score: number | null;
-  criterionComment: string;
+  criterionComment: string | null;
 }
 
 interface Evaluatee {
@@ -72,7 +72,7 @@ export interface Assessment {
   assessmentId: string;
   startAt: Date;
   endsAt: Date;
-  evaluateeInfo: Evaluatee
+  evaluateeInfo: Evaluatee;
   evaluatorIds: string[];
 }
 
@@ -85,5 +85,5 @@ export interface Criteria {
 export interface Competence {
   id: string;
   name: string;
-  criteria: Criteria[]
+  criteria: Criteria[];
 }

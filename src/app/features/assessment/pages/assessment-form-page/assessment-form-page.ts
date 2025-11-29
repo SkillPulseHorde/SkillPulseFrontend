@@ -63,7 +63,7 @@ export class AssessmentFormPage implements OnInit {
     const formCompetences = this.getCompetences()
 
     for (const competence of competences) {
-      const competenceFG = new FormGroup({
+      const competenceFG = new FormGroup<CompetenceFormGroup>({
         comment: new FormControl(''),
         criteria: new FormArray<FormGroup<CriteriaFormGroup>>(
           competence.criteria.map(criteria => {
@@ -101,7 +101,7 @@ export class AssessmentFormPage implements OnInit {
   ngOnInit() {
     const assessmentId = this.activatedRoute.snapshot.params["assessmentId"];
 
-    if (assessmentId === "") return
+    if (assessmentId === "") return;
 
     this.assessmentService.getAssessment({assessmentId}).subscribe({
       next: assessment => {
@@ -134,7 +134,7 @@ export class AssessmentFormPage implements OnInit {
     this.router.navigate(['/assessments'])
   }
 
-  private evaluate() {
+  private buildCompetenceEvaluations(): CompetenceEvaluation[] {
     const competenceEvaluations: CompetenceEvaluation[] = []
 
     const formCompetences = this.assessmentForm.controls.competences
@@ -146,33 +146,39 @@ export class AssessmentFormPage implements OnInit {
         criterionEvaluations: [],
         competenceComment: comp.controls.comment.value
       }
-      let competenceNotCounted = false
+      let shouldExcludeCompetence = false
       for (let j = 0; j < comp.controls.criteria.length; j++) {
         const crit = comp.controls.criteria.at(j)
 
         const score = crit.controls.rating.value
-        const comment = crit.controls.comment.value
+        const comment = crit.controls.comment.value === "" ? null : crit.controls.comment.value
         const cannotEvaluate = crit.controls.cannotEvaluate.value
 
         if (this.competences()[i].criteria[j].isMandatory && cannotEvaluate) {
-          competenceNotCounted = true
+          shouldExcludeCompetence = true
           break
         }
 
         const criterion: CriterionEvaluation = {
           criterionId: this.competences()[i].criteria[j].id,
           score: cannotEvaluate ? null : score,
-          criterionComment: comment!
+          criterionComment: comment
         }
 
         competence.criterionEvaluations?.push(criterion)
       }
-      if (competenceNotCounted) {
+      if (shouldExcludeCompetence) {
         competence.criterionEvaluations = null
         competence.competenceComment = null
       }
       competenceEvaluations.push(competence)
     }
+
+    return competenceEvaluations
+  }
+
+  private evaluate() {
+    const competenceEvaluations = this.buildCompetenceEvaluations()
 
     this.assessmentService.evaluate({
       assessmentId: this.assessment()?.assessmentId!,
@@ -210,7 +216,10 @@ export class AssessmentFormPage implements OnInit {
           unevaluatedCriteria.push(this.competences()[i].criteria[j].name)
         }
         if (crit.hasError('mandatoryCriteria')) {
-          unevaluatedMandatory.set(this.competences()[i].name, unevaluatedMandatory.get(this.competences()[i].name) ? [...unevaluatedMandatory.get(this.competences()[i].name)!, this.competences()[i].criteria[j].name] : [this.competences()[i].criteria[j].name])
+          const competenceName = this.competences()[i].name;
+          const criteriaName = this.competences()[i].criteria[j].name;
+          const existing = unevaluatedMandatory.get(competenceName) ?? [];
+          unevaluatedMandatory.set(competenceName, [...existing, criteriaName]);
         }
         if (crit.controls.comment.hasError('commentRequired')) {
           emptyComment.push(this.competences()[i].criteria[j].name)
@@ -220,7 +229,7 @@ export class AssessmentFormPage implements OnInit {
 
     if (unevaluatedCriteria.length > 0) {
       this.isSecondAttemptToEvaluate.set(false)
-      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>)
+      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>())
       this.toastService.error("Все критерии должны быть оценены или отмечены флагом \"Не могу оценить\"")
       this.viewportScroller.scrollToPosition([0, 0], {behavior: 'smooth'})
       return
@@ -228,7 +237,7 @@ export class AssessmentFormPage implements OnInit {
 
     if (emptyComment.length > 0) {
       this.isSecondAttemptToEvaluate.set(false)
-      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>)
+      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>())
       this.toastService.error("Не заполнены обязательные поля комментариев")
       this.viewportScroller.scrollToPosition([0, 0], {behavior: 'smooth'})
       return
@@ -243,6 +252,4 @@ export class AssessmentFormPage implements OnInit {
 
     this.evaluate()
   }
-
-  protected readonly FormControl = FormControl;
 }

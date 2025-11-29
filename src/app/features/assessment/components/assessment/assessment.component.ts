@@ -35,7 +35,7 @@ export class AssessmentComponent {
   }
 
   onAssessmentClick() {
-    if (!this.isClickable) return
+    if (!this.isClickable()) return
 
     this.clicked.emit(this.assessment().assessmentId)
   }
