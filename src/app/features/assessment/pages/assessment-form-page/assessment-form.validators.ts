@@ -12,7 +12,7 @@ export function criteriaCommentRequiredValidator(): ValidatorFn {
       rating === 10;
 
     if (isCommentRequired && (!comment || comment.trim() === '')) {
-      formGroup.get('comment')?.setErrors({...formGroup.get('comment')?.errors, commentRequired: true});
+      formGroup.get('comment')?.setErrors({...(formGroup.get('comment')?.errors ?? {}), commentRequired: true});
 
       return {commentRequired: true};
     }
