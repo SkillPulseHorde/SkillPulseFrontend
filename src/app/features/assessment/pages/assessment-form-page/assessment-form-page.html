@@ -29,10 +29,10 @@
         Следующие обязательные пункты должны быть оценены по шкале от 1 до 10. <br/>
         Если эти пункты не будут оценены, компетенция не будет засчитана при подведении итогов аттестации:
           <ul class="unevaluatedCriteriaList">
-            @for (competence of unevaluatedMandatoryCriteria().keys(); track competence) {
-              <li>{{ competence }}</li>
+            @for (entry of unevaluatedMandatoryCriteria().entries(); track entry[0]) {
+              <li>{{ entry[0] }}</li>
               <ul>
-              @for (criteria of unevaluatedMandatoryCriteria().get(competence); track criteria) {
+              @for (criteria of entry[1]; track criteria) {
                 <li>{{ criteria }}</li>
               }
               </ul>

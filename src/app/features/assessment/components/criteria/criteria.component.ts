@@ -26,6 +26,6 @@ export class CriteriaComponent {
     const cannotEvaluateFormControl = this.control().controls.cannotEvaluate
     cannotEvaluateFormControl.setValue(!cannotEvaluateFormControl.value)
     const ratingFormControl = this.control().controls.rating
-    ratingFormControl.setValue(0)
+    ratingFormControl.setValue(null)
   }
 }

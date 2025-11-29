@@ -16,7 +16,7 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {
   criteriaCommentRequiredValidator,
   criteriaRatingOrCannotEvaluateValidator,
-  mandatoryCriteria
+  mandatoryCriteriaValidator
 } from './assessment-form.validators';
 import {AssessmentFormGroup, CompetenceFormGroup, CriteriaFormGroup} from './assessment-form.model';
 import {Button} from '../../../../components/button/button.component';
@@ -70,13 +70,13 @@ export class AssessmentFormPage implements OnInit {
             const criteriaGroup = new FormGroup<CriteriaFormGroup>({
               cannotEvaluate: new FormControl(false),
               comment: new FormControl(''),
-              rating: new FormControl(0),
+              rating: new FormControl(null),
             })
 
             criteriaGroup.setValidators([
               criteriaCommentRequiredValidator(),
               criteriaRatingOrCannotEvaluateValidator(),
-              mandatoryCriteria(criteria.isMandatory)
+              mandatoryCriteriaValidator(criteria.isMandatory)
             ])
 
             return criteriaGroup
@@ -135,46 +135,37 @@ export class AssessmentFormPage implements OnInit {
   }
 
   private buildCompetenceEvaluations(): CompetenceEvaluation[] {
-    const competenceEvaluations: CompetenceEvaluation[] = []
 
     const formCompetences = this.assessmentForm.controls.competences
 
-    for (let i = 0; i < this.competences().length; i++) {
-      const comp = formCompetences.at(i)
-      const competence: CompetenceEvaluation = {
-        competenceId: this.competences()[i].id,
-        criterionEvaluations: [],
-        competenceComment: comp.controls.comment.value
-      }
-      let shouldExcludeCompetence = false
-      for (let j = 0; j < comp.controls.criteria.length; j++) {
-        const crit = comp.controls.criteria.at(j)
+    return this.competences().map((competence, i) => {
+      const comp = formCompetences.at(i);
+      const criteriaControls = comp.controls.criteria;
 
-        const score = crit.controls.rating.value
-        const comment = crit.controls.comment.value === "" ? null : crit.controls.comment.value
-        const cannotEvaluate = crit.controls.cannotEvaluate.value
-
-        if (this.competences()[i].criteria[j].isMandatory && cannotEvaluate) {
-          shouldExcludeCompetence = true
-          break
-        }
-
-        const criterion: CriterionEvaluation = {
-          criterionId: this.competences()[i].criteria[j].id,
+      const criterionEvaluations: CriterionEvaluation[] = competence.criteria.map((criterion, j) => {
+        const crit = criteriaControls.at(j);
+        const score = crit.controls.rating.value;
+        const comment = crit.controls.comment.value === "" ? null : crit.controls.comment.value;
+        const cannotEvaluate = crit.controls.cannotEvaluate.value;
+        return {
+          criterionId: criterion.id,
           score: cannotEvaluate ? null : score,
           criterionComment: comment
-        }
+        };
+      });
 
-        competence.criterionEvaluations?.push(criterion)
-      }
-      if (shouldExcludeCompetence) {
-        competence.criterionEvaluations = null
-        competence.competenceComment = null
-      }
-      competenceEvaluations.push(competence)
-    }
+      const shouldExcludeCompetence = competence.criteria.some((criterion, j) => {
+        const crit = criteriaControls.at(j);
+        const cannotEvaluate = crit.controls.cannotEvaluate.value;
+        return criterion.isMandatory && cannotEvaluate;
+      });
 
-    return competenceEvaluations
+      return {
+        competenceId: competence.id,
+        criterionEvaluations: shouldExcludeCompetence ? null : criterionEvaluations,
+        competenceComment: shouldExcludeCompetence ? null : comp.controls.comment.value
+      };
+    });
   }
 
   private evaluate() {
@@ -228,18 +219,12 @@ export class AssessmentFormPage implements OnInit {
     }
 
     if (unevaluatedCriteria.length > 0) {
-      this.isSecondAttemptToEvaluate.set(false)
-      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>())
-      this.toastService.error("Все критерии должны быть оценены или отмечены флагом \"Не могу оценить\"")
-      this.viewportScroller.scrollToPosition([0, 0], {behavior: 'smooth'})
+      this.showValidationError("Все критерии должны быть оценены или отмечены флагом \"Не могу оценить\"")
       return
     }
 
     if (emptyComment.length > 0) {
-      this.isSecondAttemptToEvaluate.set(false)
-      this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>())
-      this.toastService.error("Не заполнены обязательные поля комментариев")
-      this.viewportScroller.scrollToPosition([0, 0], {behavior: 'smooth'})
+      this.showValidationError("Не заполнены обязательные поля комментариев")
       return
     }
 
@@ -251,5 +236,12 @@ export class AssessmentFormPage implements OnInit {
     }
 
     this.evaluate()
+  }
+
+  private showValidationError(message: string) {
+    this.isSecondAttemptToEvaluate.set(false)
+    this.unevaluatedMandatoryCriteria.set(new Map<string, string[]>())
+    this.toastService.error(message)
+    this.viewportScroller.scrollToPosition([0, 0], {behavior: 'smooth'})
   }
 }

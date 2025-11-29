@@ -25,7 +25,7 @@ export class Rating {
   }
 
   mouseLeave() {
-    this.hoverRating.set(this.control().value);
+    this.hoverRating.set(this.control().value ?? 0);
   }
 
   protected readonly Array = Array;

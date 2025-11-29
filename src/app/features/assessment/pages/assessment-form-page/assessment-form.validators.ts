@@ -43,7 +43,7 @@ export function criteriaRatingOrCannotEvaluateValidator(): ValidatorFn {
   };
 }
 
-export function mandatoryCriteria(isMandatory: boolean): ValidatorFn {
+export function mandatoryCriteriaValidator(isMandatory: boolean): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
     const rating = formGroup.get('rating')?.value;
 
