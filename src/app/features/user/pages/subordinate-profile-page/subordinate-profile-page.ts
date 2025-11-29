@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../api/user.service';
 import {take} from 'rxjs';
 import {User} from '../../store/user.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'subordinate-profile-page',
@@ -24,6 +25,7 @@ export class SubordinateProfilePage implements OnInit {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   userService = inject(UserService);
+  toastService = inject(ToastrService);
 
   prevPath = signal("")
   user = signal<User | null>(null)
@@ -52,6 +54,11 @@ export class SubordinateProfilePage implements OnInit {
           userId,
           ...user
         })
+      },
+      error: err => {
+        const errorMsg = err.error?.detail ?? "Ошибка получения данных пользователя"
+        this.toastService.error(errorMsg)
+        this.router.navigate([this.prevPath()])
       }
     })
   }

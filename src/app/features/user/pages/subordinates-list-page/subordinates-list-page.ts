@@ -22,7 +22,7 @@ export class SubordinatesListPage implements OnInit {
   router = inject(Router);
   store = inject(Store<{user: UserState}>);
   userService = inject(UserService);
-  toastService = inject(ToastrService)
+  toastService = inject(ToastrService);
 
   title = signal("")
   subordinates = signal<Subordinate[] | Evaluator[]>([])
@@ -64,7 +64,6 @@ export class SubordinatesListPage implements OnInit {
       next: subordinates => {
         this.subordinates.set(subordinates);
         this.filteredSubordinates.set(subordinates);
-        console.log(subordinates);
       },
       error: err => {
         const errorMsg = err.error?.detail ?? "Ошибка получения списка подчиненных"
@@ -80,7 +79,6 @@ export class SubordinatesListPage implements OnInit {
       next: subordinates => {
         this.subordinates.set(subordinates);
         this.filteredSubordinates.set(subordinates);
-        console.log(subordinates);
       },
       error: err => {
         const errorMsg = err.error?.detail ?? "Ошибка получения списка подчиненных"

@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, inject, input, OnDestroy, signal} from '@angular/core';
-import {Evaluator} from '../../store/user.model';
+import {Evaluator, Subordinate} from '../../store/user.model';
 import { getFullName, getPositionString } from '../../../utils';
 import {Avatar} from '../../../../components/avatar/avatar.component';
 import {Icon} from '../../../../components/icon/icon.component';
@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
 export class SubordinatesListItem implements OnDestroy {
   router = inject(Router)
 
-  subordinate = input.required<Evaluator>();
+  subordinate = input.required<Subordinate | Evaluator>();
 
   isMenuOpen = signal(false);
   menuPosition = signal({ x: '0px', y: '0px' });
