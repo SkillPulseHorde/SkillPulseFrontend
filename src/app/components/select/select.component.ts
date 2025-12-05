@@ -18,7 +18,7 @@ export class SelectComponent {
   placeholder = input("")
   disabled = input<boolean>(false)
   options = input.required<SelectOption[]>();
-  selected = input.required<SelectOption | undefined>();
+  selected = input.required<SelectOption | undefined | null>();
 
   selectedLabel = computed<string | undefined>(() => this.selected()?.label);
   isOpen = signal<boolean>(false)

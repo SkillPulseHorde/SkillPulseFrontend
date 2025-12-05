@@ -1,0 +1,41 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 54px;
+  border: 1px solid #DFDFDF;
+  background-color: #F1F1F6;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+  padding: 12px 16px;
+  color: #535353;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+
+  icon {
+    transform: rotate(180deg);
+  }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  padding: 0 16px 12px 16px;
+}
+
+.accordion.open {
+  max-height: 900px;
+  transition: all 0.3s ease-in-out;
+}
+
+.open .title icon {
+  transform: rotate(0deg);
+}

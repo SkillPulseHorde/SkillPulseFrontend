@@ -1,0 +1,172 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 64px 90px;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: 500;
+  color: #C22918;
+  height: 58px;
+}
+
+.assessmentSelect {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label, span {
+    color: #1D1D1D;
+    font-size: 14px;
+    height: min-content;
+  }
+
+  app-select {
+    width: 240px;
+  }
+}
+
+.radarChartSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subtitle {
+  font-size: 28px;
+  color: #C22918;
+  font-weight: 600;
+  height: 34px;
+}
+
+.radarChartSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.competenceDetailsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.competenceDetailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.competenceTitle {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  padding: 4px 12px;
+  color: #3B3B3B;
+  font-size: 14px;
+  border: 1px solid #BFBFBF;
+  border-radius: 50px;
+  line-height: 16px;
+}
+
+.competenceContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.competenceComment {
+  display: flex;
+  align-items: center;
+  color: #535353;
+  font-weight: 500;
+  gap: 10px;
+}
+
+.openModalText {
+  color: #c22918;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 16px;
+}
+
+.openModalText:hover {
+  text-decoration: underline;
+}
+
+.criterion {
+  width: 100%;
+  height: 54px;
+  padding: 0 10px;
+  border-left: 1px solid #c22918;
+  display: flex;
+  flex-direction: column;
+
+  .info {
+    line-height: 18px;
+    color: #535353;
+    font-size: 16px;
+  }
+
+  .openModalText {
+    line-height: 18px;
+  }
+}
+
+.commentsModal {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  max-height: 384px;
+  overflow-y: auto;
+
+  icon {
+    color: #C22918;
+  }
+}
+
+.comment {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  min-height: 64px;
+  font-size: 20px;
+  line-height: 24px;
+  color: #535353;
+  padding: 20px 0;
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.comment:last-of-type {
+  border: none;
+}
+
+.positive {
+  color: #4EC423;
+}
+
+.negative {
+  color: #C22918;
+}
+
+.lineChartModal {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  overflow-y: auto;
+}

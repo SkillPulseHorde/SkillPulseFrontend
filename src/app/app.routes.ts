@@ -12,6 +12,7 @@ import {AssessmentFormPage} from './features/assessment/pages/assessment-form-pa
 import {EditAssessmentPage} from './features/assessment/pages/edit-assessment-page/edit-assessment-page';
 import {SubordinateProfilePage} from './features/user/pages/subordinate-profile-page/subordinate-profile-page';
 import {SubordinatesListPage} from './features/user/pages/subordinates-list-page/subordinates-list-page';
+import {ResultsPage} from './features/user/pages/results-page/results-page.component';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,10 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: ProfilePage
+      },
+      {
+        path: 'results',
+        component: ResultsPage
       },
       {
         path: 'assessments',

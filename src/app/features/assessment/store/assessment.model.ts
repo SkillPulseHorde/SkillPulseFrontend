@@ -87,3 +87,43 @@ export interface Competence {
   name: string;
   criteria: Criteria[];
 }
+
+export interface GetCompletedAssessmentsRequestProps {
+  userId: string;
+}
+
+export interface CompletedAssessment {
+  assessmentId: string;
+  startAt: Date;
+  endsAt: Date;
+}
+
+export interface GetAssessmentResultRequestProps {
+  assessmentId: string;
+}
+
+export interface CriterionSummary {
+  averageCriterionScore: number;
+  criterionComments: string[];
+}
+
+export interface CompetenceSummary {
+  averageCompetenceScore: number;
+  criterionSummaries: Map<string, CriterionSummary>
+  competenceComments: string[];
+}
+
+export interface CompletedAssessmentData {
+  competenceSummaries: Map<string, CompetenceSummary>
+}
+
+export interface GetCompetenceResultsRequestProps {
+  userId: string;
+  competenceId: string;
+}
+
+export interface CompetenceResult {
+  assessmentId: string;
+  assessmentDate: Date;
+  competenceScore: number;
+}

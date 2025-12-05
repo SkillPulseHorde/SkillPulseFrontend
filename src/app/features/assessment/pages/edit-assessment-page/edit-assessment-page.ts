@@ -134,7 +134,7 @@ export class EditAssessmentPage implements OnInit {
       return false;
     }
     if (!this.evaluatorsList()?.evaluators().length) {
-      this.toastService.error("Список рецензентов пуст")
+      this.toastService.error("Список рецензентов не может быть пустым. Добавьте хотя бы одного рецензента")
       return false;
     }
     return true;

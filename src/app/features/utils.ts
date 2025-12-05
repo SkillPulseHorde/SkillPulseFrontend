@@ -97,3 +97,13 @@ export const formatDate = (date: Date) => {
   const yyyy = date.getFullYear();
   return `${dd}.${mm}.${yyyy}`;
 }
+
+export const getDateFromString = (date: string) => {
+  const [d, m, y] = date.split('.').map(Number);
+  console.log(date)
+  return new Date(y, m-1, d)
+}
+
+export function getTypedMapEntries<V>(obj: Map<string, V>): [string, V][] {
+  return Object.entries(obj);
+}

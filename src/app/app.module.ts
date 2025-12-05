@@ -17,6 +17,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppToast} from './components/toast/toast.component';
 import {Modal} from "./components/modal/modal.component";
+import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,7 +44,8 @@ import {Modal} from "./components/modal/modal.component";
     provideRouter(routes),
     provideHttpClient(
       withInterceptors([authInterceptor, refreshInterceptor])
-    )
+    ),
+    provideCharts(withDefaultRegisterables()),
   ],
   bootstrap: [AppComponent],
 })

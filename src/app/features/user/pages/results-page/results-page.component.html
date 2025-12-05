@@ -1,0 +1,96 @@
+<div class="page">
+  <h1 class="pageTitle">Мои результаты</h1>
+  <div class="assessmentSelect">
+    <div class="selectWrapper">
+      <label for="mainAssessment">Аттестация</label>
+      <app-select [options]="assessments()" [selected]="selectedMainAssessment()" id="mainAssessment"
+                  placeholder="Аттестация" (optionSelected)="onMainAssessmentSelected($event)"/>
+    </div>
+    <app-button label="Скачать отчет"/>
+    <app-button label="Показать индивидуальный план развития"/>
+  </div>
+  @if (selectedMainAssessment()) {
+    <div class="assessmentSelect">
+      <div class="selectWrapper">
+        <label for="compareAssessment">Аттестация</label>
+        <app-select [options]="assessmentsToCompare()" [selected]="selectedCompareAssessment()" id="compareAssessment"
+                    placeholder="Аттестация" (optionSelected)="onCompareAssessmentSelected($event)"/>
+        <span>*Результаты сравнения отображаются только на текущей странице.</span>
+      </div>
+    </div>
+    <div class="radarChartSection">
+      <h2 class="subtitle">Компетенции</h2>
+      <radar-chart [radarChartLabels]="radarChartLabels()" [radarChartDataset]="radarChartDataset()"
+                   (chartPointClicked)="openLineChartModal($event)"/>
+    </div>
+    @if (mainAssessmentData()) {
+      <div class="competenceDetailsSection">
+        <h2 class="subtitle">Детали по компетенциям</h2>
+        <div class="competenceDetailsList">
+          @for (competence of getTypedMapEntries(mainAssessmentData()!.competenceSummaries); track competence[0]) {
+            <accordion>
+              <ng-template #accordionTitle>
+                <div class="competenceTitle">
+                  {{ competencesAndCriteria().get(competence[0]) }}
+                  <div class="score">
+                    {{ competence[1].averageCompetenceScore.toFixed(2) }}
+                    @if (assessmentScoreComparison() && assessmentScoreComparison().get(competence[0])) {
+                      <span [ngClass]="{
+                      'positive': assessmentScoreComparison().get(competence[0])! > 0,
+                      'negative': assessmentScoreComparison().get(competence[0])! < 0
+                      }">
+                        &nbsp;({{ assessmentScoreComparison().get(competence[0])! > 0 ? "+" + assessmentScoreComparison().get(competence[0])!.toFixed(2) : assessmentScoreComparison().get(competence[0])!.toFixed(2) }})
+                      </span>
+                    }
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #accordionContent>
+                <div class="competenceContent">
+                  <div class="competenceComment">
+                    Итоговый комментарий: <span class="openModalText"
+                                                (click)="openCommentModal(competence[1].competenceComments)">Посмотреть комментарий</span>
+                  </div>
+                  @for (criterion of getTypedMapEntries(competence[1].criterionSummaries); track criterion[0]) {
+                    <div class="criterion">
+                      <span class="info">{{ competencesAndCriteria().get(criterion[0]) }}</span>
+                      <span class="info">
+                        Балл: {{ criterion[1].averageCriterionScore.toFixed(2) }}
+                        @if (assessmentScoreComparison() && assessmentScoreComparison().get(criterion[0])) {
+                          <span [ngClass]="{
+                          'positive': assessmentScoreComparison().get(criterion[0])! > 0,
+                          'negative': assessmentScoreComparison().get(criterion[0])! < 0
+                          }">
+                            ({{ assessmentScoreComparison().get(criterion[0])! > 0 ? "+" + assessmentScoreComparison().get(criterion[0])!.toFixed(2) : assessmentScoreComparison().get(criterion[0])!.toFixed(2) }})
+                          </span>
+                        }
+                      </span>
+                      <span class="openModalText" (click)="openCommentModal(criterion[1].criterionComments)">Посмотреть, что Ваши коллеги думают о Вас</span>
+                    </div>
+                  }
+                </div>
+              </ng-template>
+            </accordion>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>
+
+<ng-template #commentsModal>
+  <div class="commentsModal">
+    @for (comment of comments(); track $index) {
+      <div class="comment">
+        <icon [size]="24" type="comment"/>
+        <span class="commentText">{{ comment }}</span>
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #lineChartModal>
+  <div class="lineChartModal">
+    <line-chart [lineChartDataset]="lineChartDataset()" [lineChartLabels]="lineChartLabels()"/>
+  </div>
+</ng-template>

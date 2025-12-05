@@ -1,0 +1,9 @@
+.radarChartWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radarChartWrapper canvas {
+  width: 100%;
+}

@@ -1,0 +1,11 @@
+<div class="accordion" [ngClass]="{
+  'open': isOpen()
+}">
+  <div class="title" (click)="toggleOpen()">
+    <ng-container *ngTemplateOutlet="accordionTitle()"></ng-container>
+    <icon [size]="24" type="arrow"/>
+  </div>
+  <div class="content">
+    <ng-template *ngTemplateOutlet="accordionContent()"></ng-template>
+  </div>
+</div>

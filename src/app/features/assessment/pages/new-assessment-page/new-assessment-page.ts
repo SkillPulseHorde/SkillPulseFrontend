@@ -137,7 +137,7 @@ export class NewAssessmentPage implements OnInit {
       return false;
     }
     if (!this.evaluatorsList()?.evaluators().length) {
-      this.toastService.error("Список рецензентов пуст")
+      this.toastService.error("Список рецензентов не может быть пустым. Добавьте хотя бы одного рецензента")
       return false;
     }
     return true;
@@ -156,7 +156,7 @@ export class NewAssessmentPage implements OnInit {
       take(1),
     ).subscribe(
       () => {
-        this.toastService.success("Аттестация успешно запущена")
+        this.toastService.success("Аттестация успешно создана")
         this.router.navigate(["/manage-assessments"])
       },
       err => {

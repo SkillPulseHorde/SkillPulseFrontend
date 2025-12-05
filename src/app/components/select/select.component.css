@@ -10,6 +10,7 @@
 }
 
 .selectDisplay {
+  height: 100%;
   padding: 12px 10px;
   border: 1px solid #535353;
 }
@@ -58,7 +59,7 @@
   flex-direction: column;
   gap: 4px;
   height: 188px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .option {

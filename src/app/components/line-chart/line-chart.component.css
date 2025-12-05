@@ -1,0 +1,9 @@
+.lineChartWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lineChartWrapper canvas {
+  width: 100%;
+}

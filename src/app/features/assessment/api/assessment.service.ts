@@ -4,15 +4,15 @@ import {map, Observable, take} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {
   Assessment,
-  Competence,
-  DeleteAssessmentRequestProps, 
+  Competence, CompetenceResult, CompletedAssessment, CompletedAssessmentData,
+  DeleteAssessmentRequestProps,
   EvaluateRequestProps,
   GetActiveAssessmentsByEvaluatorRequestProps,
-  GetAssessmentRequestProps,
-  GetAssessmentsRequestProps,
-  GetCompetencesRequestProps,
+  GetAssessmentRequestProps, GetAssessmentResultRequestProps,
+  GetAssessmentsRequestProps, GetCompetenceResultsRequestProps,
+  GetCompetencesRequestProps, GetCompletedAssessmentsRequestProps,
   GetEvaluatorsIdsRequestProps,
-  StartAssessmentRequestProps, 
+  StartAssessmentRequestProps,
   UpdateAssessmentRequestProps,
   UpdateEvaluatorsIdsRequestProps
 } from '../store/assessment.model';
@@ -69,7 +69,7 @@ export class AssessmentService {
       evaluatorIds
     })
   }
-  
+
   getAssessment({assessmentId}: GetAssessmentRequestProps): Observable<Assessment> {
     return this.http.get<Assessment>(`${environment.apiGatewayUrl}/api/assessments/${assessmentId}`).pipe(
       take(1),
@@ -87,5 +87,30 @@ export class AssessmentService {
 
   evaluate(data: EvaluateRequestProps) {
     return this.http.post(`${environment.apiGatewayUrl}/api/assessments/evaluations`, data)
+  }
+
+  getCompletedAssessments({userId}: GetCompletedAssessmentsRequestProps): Observable<CompletedAssessment[]> {
+    return this.http.get<CompletedAssessment[]>(`${environment.apiGatewayUrl}/api/assessments/evaluatee/${userId}/completed`).pipe(
+      take(1),
+      map(assessments => assessments.map(assessment => ({
+          ...assessment,
+          startAt: new Date(assessment.startAt),
+          endsAt: new Date(assessment.endsAt),
+        }))
+      ))
+  }
+
+  getAssessmentResult({assessmentId}: GetAssessmentResultRequestProps): Observable<CompletedAssessmentData> {
+    return this.http.get<CompletedAssessmentData>(`${environment.apiGatewayUrl}/api/assessments/${assessmentId}/result`)
+  }
+
+  getCompetenceResults({userId, competenceId}: GetCompetenceResultsRequestProps): Observable<CompetenceResult[]> {
+    return this.http.get<CompetenceResult[]>(`${environment.apiGatewayUrl}/api/assessments/users/${userId}/competences/${competenceId}/results`).pipe(
+      take(1),
+      map(results => results.map(result => ({
+          ...result,
+          assessmentDate: new Date(result.assessmentDate),
+        }))
+      ))
   }
 }
